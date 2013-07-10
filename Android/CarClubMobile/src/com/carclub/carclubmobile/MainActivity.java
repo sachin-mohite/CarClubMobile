@@ -11,7 +11,6 @@ public class MainActivity extends DroidGap {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		super.setIntegerProperty("splashscreen", R.drawable.splash);
-		super.setIntegerProperty("loadUrlTimeoutValue", 70000);
 		//setContentView(R.layout.activity_main);
 		super.loadUrl("file:///android_asset/www/index.html", 3000);
 	}

@@ -5,18 +5,8 @@
 
 		//db.transaction(populateDB, errorCB, null);
 		//db.transaction(queryDB, errorCB, null);
-		
-		$.mobile.defaultPageTransition   = 'none';
-		$.mobile.defaultDialogTransition = 'none';
-		$.mobile.buttonMarkup.hoverDelay = 0;
-		
-		var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
-			telephoneNumber.get(function(result) {
-			        console.log("result = " + result);
-			    }, function() {
-			        console.log("error");
-		});
-		
-		$.mobile.changePage('#idCreateProfilePage');
-		
+
+
+	        
+	        $.mobile.changePage("pages/profilePage.html", { transition: "slide" });
 	});//$(document).ready(function()

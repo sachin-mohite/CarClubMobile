@@ -1,6 +1,6 @@
 
 <!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idMakeReservationPage" style="background:url(../images/inner_page_bg.png) background-repeat:repeat-y;">
+		<div data-role="page" data-theme="b" id="idMakeReservationPage" style="background:url(../images/inner_page_bg.png) repeat-y;">
 		
 			<!-- Page Header Start -->
 			<div id="idHeader" data-role="header" data-position="fixed" class="ui-bar ui-bar-b">
@@ -19,76 +19,50 @@
 
 				<form action="#" method="get">
 					<div data-role="fieldcontain" data-position="inline">
-						<label for="city">
-						City
+						<label for="city" style="color:#045BA8;">
+						CITY
 						</label>
-						<!--input type="text" name="city" id="idCity" value="" placeholder="jljlk"/-->
-						
-						<select name="select-choice-0" id="select-choice-1">
-						   <option value="1"></option>
-						   <option value="2">Standard: 7 day</option>
-						   <option value="3">Rush: 3 days</option>
-						   <option value="4">Express: next day</option>
-						   <option value="5">Overnight</option>
-						</select>
-						
-						
-						
+			            <select name="pageselect" id="idCityselect" data-native-menu="false">
+			            </select>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
-						<label for="cType">
-						Car Type
+						<label for="cType" style="color:#045BA8;">
+						CAR TYPE
 						</label>
-						<!--input type="text" name="cType" id="idCarType" value="" placeholder="jljlk"/-->
-						<select name="select-choice-0" id="select-choice-1">
-						   <option value="1"></option>
-						   <option value="2">Honda City</option>
-						   <option value="3">Ford Fiesta</option>
-						   <option value="4">Maruti Esteem</option>
-						   <option value="5">Ford Ikon</option>
-						</select>
-						
+						<input type="text" name="cType" id="idCarType" value=""/>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
-						<label for="pickupTime">
-						Pick Up Time
+						<label for="pickupTime" style="color:#045BA8;">
+						PICK UP TIME
 						</label>
-						<!--input type="time" name="pickupTime" id="idPickupTime" value="" placeholder="jljlk"/-->
-						<select name="select-choice-0" id="select-choice-1">
-						   <option value="1"></option>
-						   <option value="2">Time</option>
-						   <option value="3">time</option>
-						   <option value="4">time</option>
-						   <option value="5">time</option>
-						</select>
-						
+						<input type="time" name="pickupTime" id="idPickupTime" value=""/>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
-						<label for="date">
-						Reporting Date
+						<label for="date" style="color:#045BA8;">
+						REPORTING TIME
 						</label>
 						<input type="date" name="date" id="idDate" value=""/>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
-						<label for="usage">
-						Reporting Date
+						<label for="usage" style="color:#045BA8;">
+						USAGE
 						</label>
-						<input type="text" name="usage" id="idUsage" value="" placeholder="jljlk"/>
+						<input type="text" name="usage" id="idUsage" value=""/>
 					</div>
 					
 					<div data-role="fieldcontain">
-						<label for="textarea">
-						Area
+						<label for="textarea" style="color:#045BA8;">
+						AREA
 						</label>
 						<textarea cols="40" rows="8" name="textarea" id="textarea">
 						</textarea>
 					</div>
 					
-					 <img src="../images/btn_next.png" width="90%"></img>	
+					<a data-role="button" href="selectPackage.html"  id="idMakeReservationNext" data-transition="none">NEXT</a>			
 				</form>
 			
 			</div>
@@ -96,7 +70,9 @@
 		
 			<!-- Page Footer Start -->
 			<!--div data-role="footer" data-position="fixed" class="ui-bar ui-bar-b">
+
 				 <img src="../images/btn_next.png" width="90%"></img>
+
 			</div-->
 			<!-- Page Footer End -->
 			

@@ -1,0 +1,4 @@
+	$("#idMainMenuPage").live('pageinit',function(){
+
+		
+	});

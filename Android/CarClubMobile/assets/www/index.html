@@ -27,40 +27,70 @@
 	
 		<script type="text/javascript" src="phonegap/cordova-2.7.0.js"></script>
 		
-		<link rel="stylesheet" href="scripts/jqueryMobile/css/1.2.0/jquery.mobile.structure-1.2.0.min.css" />
-		<link rel="stylesheet" href="scripts/jqueryMobile/css/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" href="scripts/jqueryMobile/css/jquery.mobile.structure-1.2.0.min.css" />
+		<link rel="stylesheet" href="scripts/jqueryMobile/css/jquery.mobile-1.2.0.min.css" />
 		<script src="scripts/jqueryMobile/js/jquery-1.8.1.min.js"></script>
-		<script src="scripts/jqueryMobile/js/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-		
-		<!--link rel="stylesheet" href="scripts/jqueryMobile/css/custom/jquery.mobile.custom.structure.min.css" />
-		<link rel="stylesheet" href="scripts/jqueryMobile/css/custom/jquery.mobile.custom.theme.min.css" />
-		<script src="scripts/jqueryMobile/js/jquery-1.8.1.min.js"></script>
-		<script src="scripts/jqueryMobile/js/custom/jquery.mobile.custom.min.js"></script-->
-		
-		<script src="scripts/fastclick.js"></script>
-		<link rel="stylesheet" href="styles/styles.css" />
+		<script src="scripts/jqueryMobile/js/jquery.mobile-1.2.0.min.js"></script>
 
 		<style>
 			#page {height: 100% !important; position:relative !important;}
 			#footer {bottom:0; position:absolute !important; top: auto !important; width:100%;}
-			.table-stroke thead th {
-			  border-bottom: 1px solid rgba(0, 0, 0, .1);
+			
+			.ui-page {
+			    -webkit-backface-visibility: hidden;
 			}
-			.table-stroke tbody th,
-			.table-stroke tbody td {
-			  border-bottom: 1px solid rgba(0, 0, 0, .05);
+			
+			.button {
+				background-image: url ('../images/btn_update.png') no-repeat;
+				cursor:pointer;
 			}
-			.ui-page .ui-content .ui-btn .my-btn .ui-btn-inner{
-			 color : blue;
-			 background : royalblue;
-			 border-radius: 0 !important;
-			}
+			
+			.ui-bar-b{border:1px solid #456f9a;background:#0762B1;color:#fff;font-weight:bold;text-shadow:0 -1px 1px #254f7a;background: #0762B1; /* Old browsers */
+		    background: -moz-linear-gradient(top, #0762B1 0%, #00549C 100%); /* FF3.6+ */
+		    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0762B1), color-stop(100%,#00549C)); /* Chrome,Safari4+ */
+		    background: -webkit-linear-gradient(top, #0762B1 0%,#00549C 100%); /* Chrome10+,Safari5.1+ */
+		    background: -o-linear-gradient(top, #0762B1 0%,#00549C 100%); /* Opera 11.10+ */
+		    background: -ms-linear-gradient(top, #0762B1 0%,#00549C 100%); /* IE10+ */
+		    background: linear-gradient(to bottom, #0762B1 0%,#00549C 100%); /* W3C */
+		    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0762B1', endColorstr='#00549C',GradientType=0 );}			
+			
+			.ui-btn-up-b, .ui-btn-hover-b, .ui-btn-down-b {
+			  color: white;
+			  font-weight: bold;
+			  text-decoration: none; }
+			  
+			 .ui-btn-corner-all {
+			  -moz-border-radius: 5px;
+			  -webkit-border-radius: 5px;
+			  border-radius: 5px;
+				}
+			
+			.ui-btn-up-b {
+			  border: 1px solid #00549C;
+			  background: #00549C;
+			  text-shadow: 0 -1px 1px #00549C;
+			  background-image: -moz-linear-gradient(top, #0762B1, #00549C);
+			  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #00549C), color-stop(1, #00549C));
+			  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#0762B1', EndColorStr='#00549C')"; }
+			
+			.ui-btn-hover-b {
+			  border: 1px solid #6e0000;
+			  background: #b54a4a;
+			  text-shadow: 0 -1px 1px #690101;
+			  background-image: -moz-linear-gradient(top, #d47272, #b54a4a);
+			  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d47272), color-stop(1, #b54a4a));
+			  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#d47272', EndColorStr='#b54a4a')"; }
+			
+			.ui-btn-down-b {
+			  border: 1px solid #782323;
+			  background: #0762B1;
+			  text-shadow: 0 -1px 1px #782323;
+			  background-image: -moz-linear-gradient(top, #9e3939, #0762B1);
+			  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #9e3939), color-stop(1, #0762B1));
+			  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#9e3939', EndColorStr='#0762B1')"; }
 		</style>        
 	
 		<script type="text/javascript" src="scripts/startApp.js">    
-		</script>
-		
-		<script type="text/javascript" src="scripts/telephonenumber.js">    
 		</script>
 		
 		<script type="text/javascript" src="scripts/application/mainMenuPage.js">    
@@ -73,429 +103,7 @@
 		</script>		
 	</head>
 	
-	<body id="body" onload="initFastButtons();">
-		<span id="fastclick">
-		</span>
-		
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idCreateProfilePage" data-add-back-btn=”true” style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-				<h4><span align="center">Create Profile</span></h4>
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="mobile">
-						MOBILE NO
-						</label>
-						<input type="tel" name="mobile" id="idMobile" value="" placeholder="jljlk" required/>
-					</div>
-					
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="name">
-						PASSENGER NAME
-						</label>
-						<input type="text" name="name" id="idName" value="" placeholder="jljlk" required/>
-					</div>
-									
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="cname">
-						COMPANY NAME
-						</label>
-						<input type="text" name="cname" id="idCName" value="" placeholder="jljlk" required/>
-					</div>
-					
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="email">
-						PASSENGER EMAIL
-						</label>
-						<input type="email" name="email" id="idEmail" value="" placeholder="jljlk" required/>
-					</div>
-					
-					<a data-role="button" class="my-btn" href="#idMainMenuPage">Next</a>
-										
-				</form>
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					Footer!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->
-		
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idMainMenuPage" style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-				<h4><span align="center">CAR CLUB</span></h4>
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
-						<a data-role="button" href="#idMakeReservationPage" id="idMakeReserv">MAKE RESERVATION</a>
-						<a data-role="button" href="#idFutureBookingsPage" id="idFutureBookings">FUTURE BOOKINGS</a>
-						<a data-role="button" href="#idBookingsPage" id="idEditBooking">EDIT BOOKING</a>
-						<a data-role="button" href="#idBookingsPage" id="idCanceLBooking">CANCEL BOOKING</a>						
-						<a data-role="button" href="#idHelpDeskPage" id="idEditProfile">HELP DESK</a>			
-					</div>
-				</form>
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					FOOTER!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->
-		
-		
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idMakeReservationPage" data-add-back-btn=”true” data-icon="arrow-l" style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-
-				<h4><span align="center">RESERVATION</span></h4>				
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-		
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="cType">
-						CITY
-						</label>
-						<select name="select-choice-min" id="idCarType" data-mini="true" data-placeholder="false">
-						   <option value="standard">Standard: 7 day</option>
-						   <option value="rush">Rush: 3 days</option>
-						   <option value="express">Express: next day</option>
-						   <option value="overnight">Overnight</option>
-						</select>
-					</div>
-										
-					<div data-role="fieldcontain" data-position="inline" data-corners="false" data-divider-theme="d" ui-body-d="d">
-						<label for="cType">
-						CAR TYPE
-						</label>
-						
-						<select name="select-choice-min" id="idCarType" data-mini="true">
-						   <option value="standard">Standard: 7 day</option>
-						   <option value="rush">Rush: 3 days</option>
-						   <option value="express">Express: next day</option>
-						   <option value="overnight">Overnight</option>
-						</select> 
-					</div>
-					
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="pickupTime">
-						PICK UP TIME
-						</label>
-						<input type="time" name="pickupTime" id="idPickupTime" value="" placeholder="jljlk"/>
-					</div>
-					
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="date">
-						REPORTING DATE
-						</label>
-						<input type="date" name="date" placeholder="DD-MM-YYYY" id="idDate" value="" data-role="datebox" data-options='{"mode": "calbox", "useDialogForceFalse": true, "dateFormat": "MM-DD-YYYY"}'/>
-					</div>
-					
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="usage">
-						USAGE
-						</label>
-						<input type="text" name="usage" id="idUsage" value="" placeholder="jljlk"/>
-					</div>
-					
-					<div data-role="fieldcontain">
-						<label for="textarea">
-						AREA
-						</label>
-						<textarea cols="40" rows="8" name="textarea" id="textarea">
-						</textarea>
-					</div>
-					
-					<a data-role="button" href="#idSelectPackagePage" id="idNext">NEXT</a>
-				
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					Footer!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->		
-		
-		
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idSelectPackagePage" data-add-back-btn=”true” style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-				<h4><span align="center">SELECT PACKAGE</span></h4>
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
-						<h4>Package 1</h4>
-						<span>Rate:</span>
-						<span>Extra HR Rate:</span>
-						<span>Extra KM Rate:</span>
-						<span>Service Type:</span>
-						<a data-role="button" href="#idCreditCardPage" id="idBookNow">BOOK NOW</a>
-					</div>
-				</form>
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					Footer!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->		
-		
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idCreditCardPage" data-add-back-btn=”true” style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-				<h4><span align="center">RESERVATION</span></h4>
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="city">
-						City
-						</label>
-						<input type="text" name="city" id="idCreditCard" value="" placeholder="jljlk"/>
-					</div>
-					
-					<div data-role="fieldcontain" data-position="inline">
-						<label for="cType">
-						Car Type
-						</label>
-						<input type="text" name="cType" id="idExpiryDate" value="" placeholder="jljlk"/>
-					</div>
-					
-					<a data-role="button" href="#idBookingsPage" id="idDone">DONE</a>
-				</form>
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					Footer!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->			
-
-
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idBookingsPage" data-add-back-btn=”true” style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-				<h4><span align="center">BOOKINGS</span></h4>
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
-						CONTENT HERE
-					</div>
-				</form>
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					Footer!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->	
-
-
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idFutureBookingsPage" data-add-back-btn=”true” style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-				<h4><span align="center">FUTURE BOOKINGS</span></h4>
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
-						CONTENT HERE
-					</div>
-				</form>
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					Footer!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->	
-
-
-		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idHelpDeskPage" data-add-back-btn=”true” style="background-image:url(images/inner_page_bg.png)">
-		
-			<!-- Page Header Start -->
-			<div id="idHeader" data-role="header" data-theme="b" data-position="fixed" data-position="inline">
-				<h4><span align="center">HELP DESK</span></h4>
-			</div>
-			<!-- Page Header End -->
-			
-			<!-- Page Body Start -->
-			<div data-role="content" >
-
-				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
-
-						<table data-role="table" class="table-stroke ui-responsive" data-mode="reflow">
-							<tbody>
-							<tr >
-								<td align="right" 50% style="color:DodgerBlue">
-									Telephone no:
-								</td>
-								<td align="left" 50%>
-									256-562-6565
-								</td>								
-							</tr>
-							
-							<tr >
-								<td align="right" 50% style="color:DodgerBlue">
-									Email:
-								</td>
-								<td align="left" 50%>
-									info@carclub.com
-								</td>								
-							</tr>
-							
-							<tr  >
-								<td align="right" 50% style="color:DodgerBlue">
-									Telephone no:
-								</td>
-								<td align="left" 50%>
-									256-562-6565
-								</td>								
-							</tr>
-							
-							<tr  >
-								<td align="right" 50% style="color:DodgerBlue">
-									Helpline no:
-								</td>
-								<td align="left" 50%>
-									+152-525-2525
-								</td>								
-							</tr>
-
-							<tr  >
-								<td align="right" 50% style="color:DodgerBlue">
-									Privacy Policy:
-								</td>
-								<td align="left" 50%>
-									Privacy Policy
-								</td>								
-							</tr>	
-							
-							<tr  >
-								<td align="right" 50% style="color:DodgerBlue">
-									Website:
-								</td>
-								<td align="left" 50%>
-									www.carclub.com
-								</td>								
-							</tr>	
-							</tbody>					
-						</table>
-					</div>
-				</form>
-			
-			</div>
-			<!-- Page Body End -->
-		
-			<!-- Page Footer Start -->
-			<div data-role="footer" data-theme="b" data-position="fixed">
-				<h4>
-					Footer!
-				</h4>
-			</div>
-			<!-- Page Footer End -->
-			
-		</div>
-		<!-- Page End -->	
-	
+	<body id="body">
 	</body>
 		
 </html>
