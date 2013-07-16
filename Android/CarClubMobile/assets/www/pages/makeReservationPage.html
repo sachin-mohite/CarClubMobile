@@ -15,7 +15,7 @@
 			<!-- Page Header End -->
 			
 			<!-- Page Body Start -->
-			<div data-role="content" >
+			<div data-role="content">
 
 				<form action="#" method="get">
 					<div data-role="fieldcontain" data-position="inline">
@@ -30,7 +30,8 @@
 						<label for="cType" style="color:#045BA8;">
 						CAR TYPE
 						</label>
-						<input type="text" name="cType" id="idCarType" value=""/>
+			            <select name="pageselect" id="idCarType" data-native-menu="false">
+			            </select>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
@@ -54,8 +55,8 @@
 						<input type="text" name="usage" id="idUsage" value=""/>
 					</div>
 					
-					<div data-role="fieldcontain">
-						<label for="textarea" style="color:#045BA8;">
+					<div data-role="fieldcontain"  data-position="inline">
+						<label style="color:#045BA8;">
 						AREA
 						</label>
 						<textarea cols="40" rows="8" name="textarea" id="textarea">

@@ -20,7 +20,7 @@ public class TelephoneNumber extends CordovaPlugin {
             
             LOG.d("TelephoneNumber", "**********************Phone Number:"+result);
             
-            if (result != null) {
+            if (result != null && result != "") {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
                return true;
             }
