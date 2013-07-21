@@ -1,14 +1,10 @@
 		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idCreateProfilePage" style="background:url(../images/inner_page_bg.png)  repeat-y;">
+		<div data-role="page" data-theme="b" id="idEditProfilePage" style="background:url(../images/inner_page_bg.png)  repeat-y;">
 		
 			<!-- Page Header Start -->
 			<div id="idHeader" data-role="header" data-position="fixed" class="ui-bar ui-bar-b">
-			<!-- Create Profile
-					<a href="#" data-icon="check" id="idSave">Save</a>  -->
-					
-					 <a href="mainMenuPage.html" data-transition="none"><img src="../images/btn_back.png"/></a>
-			         <h1>EDIT PROFILE</h1>		
-					
+				 <a href="mainMenuPage.html" data-transition="none"><img src="../images/btn_back.png"/></a>
+		         <h1>EDIT PROFILE</h1>		
 			</div>
 			<!-- Page Header End -->
 			
@@ -18,36 +14,28 @@
 				<form action="#" method="get">
 				
 					<div data-role="fieldcontain" data-position="inline">
-					<label for="cname">
-					MOBILE NO
-					</label>
-					<input type="number" name="mname" id="idMName" value="" placeholder="9955884488" required/>
+						<label for="mnumber" style="color:#045BA8;">
+						MOBILE NO
+						</label>
+						<input type="number" name="mnumber" id="idMobile" value="" placeholder="9955884488" required/>
 				   </div>
 				       
 				   <div data-role="fieldcontain" data-position="inline">
-					<label for="name">
-					PASSANGER NAME
-					</label>
-					<input type="text" name="name" id="idName" value="" placeholder="jljlk" required/>
-				</div>
+						<label for="name" style="color:#045BA8;">
+						PASSANGER NAME
+						</label>
+						<input type="text" name="name" id="idName" value="" placeholder="jljlk" required/>
+					</div>
 				   
 					<div data-role="fieldcontain" data-position="inline">
-						<label for="cname">
+						<label for="cname" style="color:#045BA8;">
 						COMPANY NAME
 						</label>
 						<input type="text" name="cname" id="idCName" value="" placeholder="jljlk" required/>
 					</div>
 					
-					
-					<!--div data-role="fieldcontain" data-position="inline">
-						<label for="mobile">
-						Passenger Mobile
-						</label>
-						<input type="tel" name="mobile" id="idMobile" value="" placeholder="jljlk" required/>
-					</div-->
-					
 					<div data-role="fieldcontain" data-position="inline">
-						<label for="email">
+						<label for="email" style="color:#045BA8;">
 						PASSANGER EMAIL
 						</label>
 						<input type="email" name="email" id="idEmail" value="" placeholder="jljlk" required/>
@@ -56,7 +44,7 @@
 					
 				</form>
 				
-				<a data-role="button" href="mainMenuPage.html" data-transition="none" id="idEditProfileUpdate" >UPDATE	</a>
+				<a data-role="button" href="#" data-transition="none" id="idEditProfileUpdate" >UPDATE	</a>
 			
 			</div>
 			<!-- Page Body End -->

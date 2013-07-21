@@ -38,32 +38,33 @@
 						<label for="pickupTime" style="color:#045BA8;">
 						PICK UP TIME
 						</label>
-						<input type="time" name="pickupTime" id="idPickupTime" value=""/>
+						<input type="time" name="pickupTime" id="idPickupTime" placeholder="HH:MM" value=""/>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
 						<label for="date" style="color:#045BA8;">
-						REPORTING TIME
+						REPORTING DATE
 						</label>
-						<input type="date" name="date" id="idDate" value=""/>
+						<input type="date" name="date" id="idDate" value="" placeholder="DD/MM/YYYY" min="2013-04-30"/>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
 						<label for="usage" style="color:#045BA8;">
 						USAGE
 						</label>
-						<input type="text" name="usage" id="idUsage" value=""/>
+			            <select name="pageselect" id="idUsage" data-native-menu="false">
+			            </select>						
 					</div>
 					
 					<div data-role="fieldcontain"  data-position="inline">
 						<label style="color:#045BA8;">
 						AREA
 						</label>
-						<textarea cols="40" rows="8" name="textarea" id="textarea">
+						<textarea cols="40" rows="8" name="textarea" id="idArea">
 						</textarea>
 					</div>
 					
-					<a data-role="button" href="selectPackage.html"  id="idMakeReservationNext" data-transition="none">NEXT</a>			
+					<a data-role="button" href="#"  id="idMakeReservationNext" data-transition="none">NEXT</a>			
 				</form>
 			
 			</div>

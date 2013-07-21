@@ -1,15 +1,51 @@
 	$("#idCreateProfilePage").live('pageinit',function(){
 		
-		$('#idSave').live('touchstart',function(){
+		$('#idCreatProfileNext').live('touchstart',function(){
+
+			if($('#idMobile').val() !="")
+			{		
+				localStorage.mobileNo = $('#idMobile').val();			
+			}
+			else
+			{
+				alert("Please enter Mobile Number.");
+				return;
+			}
+						
+			if($('#idName').val() !="")
+			{
+				localStorage.passangerName = $('#idName').val();			
+			}
+			else
+			{
+				alert("Please enter Your Name.");
+				return;
+			}			
+			
+			if($('#idCName').val()!="")
+			{
+				localStorage.companyName = $('#idCName').val();
+			}
+			else
+			{
+				alert("Please enter Company Name.");
+				return;
+			}
+
 		
-			localStorage.cNmae = $('#idCName').val();
-			localStorage.name = $('#idName').val();
-			localStorage.mobile = $('#idMobile').val();
-			localStorage.email = $('#idEmail').val();
+			if($('#idEmail').val() !="")
+			{		
+				localStorage.passangerEmail = $('#idEmail').val();
+			}
+			else
+			{
+				alert("Please enter Email Id.");
+				return;
+			}
 			
 			//db.transaction(createTable, onCreateProfileError, onCreateProfileSuccess);	
 			
-			$.mobile.changePage("mainMenuPage.html", { transition: "slide" });
+			$.mobile.changePage("mainMenuPage.html", { transition: "none" });
 		});	
 		
 		 $("#idWebServices").live('touchstart',function(){
@@ -35,8 +71,11 @@
 			        else{
 			        	console.log("result = " + result);
 			        	//Authentication
+			        	result=919971793539;
+			        	localStorage.mobileNo = result;
+			        	
 						var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Authentication";
-				        var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Authentication xmlns="http://www.drivecarclub.com/"> <mobile>'+result+'</mobile><Company_Code>' + '514' + '</Company_Code>   </Authentication> </soap:Body></soap:Envelope>';
+				        var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Authentication xmlns="http://www.drivecarclub.com/"> <mobile>'+result+'</mobile><company_code>' + '514' + '</company_code>   </Authentication> </soap:Body></soap:Envelope>';
 				                       console.log(soapRequest)
 						
 				        $.ajax({
@@ -45,7 +84,12 @@
 				            contentType: "text/xml",
 				            dataType: "xml",
 				            data: soapRequest,
-				            success: processSuccess,
+				            success: function(data, status, req, xml, xmlHttpRequest, responseXML) { 
+					            	console.log("************success:"+$(req.responseText).find('NewDataSet').find('Authentication').text());
+					            	localStorage.authenticated = $(req.responseText).find('NewDataSet').find('Authentication').text();
+					            	
+					            	successTrail();					            	
+				            	},
 				            error: processError
 				        });
 			        }
@@ -54,37 +98,57 @@
 		});
 		
 		
+		if(localStorage.mobileNo)
+		{
+			$("#idMobile").val(""+localStorage.mobileNo);
+			$("#idMobile").attr("disabled", "disabled");		
+		}
+
+		if(localStorage.passangerName)
+		{
+			$("#idName").val(""+localStorage.passangerName);
+		}
+		
+		//if(localStorage.companyName)
+		{
+			localStorage.companyCode = 514;
+			//$("#idCName").val(""+localStorage.companyName);
+			$("#idCName").val(""+localStorage.companyCode);
+			$("#idCName").attr("disabled", "disabled");		
+		}
+		
+		if(localStorage.passangerEmail)
+		{
+			$("#idEmail").val(""+localStorage.passangerEmail);
+		}
+							
 	});
+
+	
+	function successTrail()
+	{
+		console.log("************successTrail::"+localStorage.authenticated);
+		if(localStorage.authenticated=="TRUE")
+		{
+			$("#idMobile").val(""+localStorage.mobileNo);
+			$("#idMobile").attr("disabled", "disabled");
+		}
+	}
 	
 	function processSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
-    	//alert("*********************"+req.responseText);
-        
-        var options="";
-        var arrCity=[];
-        var arrCityCode=[];
-        
+    	alert("*********************"+req.responseText);
+
         $(req.responseText )
         .find('NewDataSet')
         .each(function(){
-            $(this).find('City_Name')
+            $(this).find('Authentication')
             .each(function(i){
-            arrCity.push($(this).text());			
-            console.log("*************************"+arrCity[i]+i);            
-            });
-            
-           $(this).find('City_Code')
-            .each(function(i){
-            arrCityCode.push($(this).text());			
-            console.log("*************************"+arrCityCode[i]+i);            
+				
+            console.log("*************************"+$(this).text());            
             });
 
         });
         
-        for(i=0;i<arrCity.length;i++)
-        options = options + '<option value="'+arrCityCode[i]+'">'+arrCity[i]+'</option>';
-        console.log("Options:"+options);
-        $('#idCityselect').append(options);
-        $("#idCityselect").selectmenu('refresh');
     }
 
     function processError(data, status, req) {
