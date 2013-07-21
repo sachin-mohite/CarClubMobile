@@ -8,7 +8,7 @@ $("#idCancelBookingPage").live('pageinit',function(){
 		sessionStorage.cancelBookingNum = $(this).attr("BookingNum");
 		
 		navigator.notification.confirm(
-				'Do you really want to cancel Booking '+sessionStorage.cancelBookingNum+''?',  // message
+				'Do you really want to cancel Booking '+sessionStorage.cancelBookingNum+'?',  // message
 				onCancelBookConfirm,              // callback to invoke with index of button pressed
 				'Cancel Booking',            // title
 				'Yes, No'          // buttonLabels
@@ -137,7 +137,11 @@ function cancelConfirmSuccess(data, status, req, xml, xmlHttpRequest, responseXM
        console.log("*************************"+$(this).text());
     });	
     
-    alert("Your booking is canceled..");
+    if($(this).text()=="true")    
+    	alert("Your booking is canceled..");
+    else
+    	alert("Your booking cannot be canceled..");
+    
     $.mobile.changePage("mainMenuPage.html", { transition: "none" });
 	
 }
