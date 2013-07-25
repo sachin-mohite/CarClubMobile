@@ -9,6 +9,7 @@
 			else
 			{
 				alert("Please enter Mobile Number.");
+				$('#idMobile').select()
 				return;
 			}
 						
@@ -19,6 +20,7 @@
 			else
 			{
 				alert("Please enter Your Name.");
+				$('#idName').select();
 				return;
 			}			
 			
@@ -28,7 +30,8 @@
 			}
 			else
 			{
-				alert("Please enter Company Name.");
+				alert("Please enter valid Mobile number. We are not able to verify your identity.");
+				$('#idCName').select();
 				return;
 			}
 
@@ -40,23 +43,19 @@
 			else
 			{
 				alert("Please enter Email Id.");
+				$('#idEmail').select();
 				return;
 			}
 			
-			//db.transaction(createTable, onCreateProfileError, onCreateProfileSuccess);	
+			setTimeout(function() {
+		        // Pass functionParam to function - $(this) will 
+		        // be out of scope when the function is called
+		        $.mobile.changePage("mainMenuPage.html", { transition: "none" });
+		    }, 300);
+		    
 			
-			$.mobile.changePage("mainMenuPage.html", { transition: "none" });
 		});	
-		
-		 $("#idWebServices").live('touchstart',function(){
-		 
-		 	//Bookings_History
-            //var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Bookings_History";
-            //var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Bookings_History xmlns="http://www.drivecarclub.com/"> <mobile>' + '919971793539' + '</mobile>  <company_code>' + '514' + '</company_code>   </Bookings_History> </soap:Body></soap:Envelope>';
-                           console.log(soapRequest)
 
-        });
-		
 	});
 	
 
@@ -67,15 +66,20 @@
 			        
 			        if(result==null || result==""){
 			        	console.log("result = Blank Response");
+			        	alert("Application is unable to fetch mobile number from the handset. Please enter it manually.");			        	
+			        	$("#idMobile").select();
+			        	return;			        	
 			        }
 			        else{
 			        	console.log("result = " + result);
 			        	//Authentication
-			        	result=919971793539;
-			        	localStorage.mobileNo = result;
+			        	localStorage.mobileNo = "91"+result;
+			        	
+			        	alert("We fetched "+localStorage.mobileNo+" as your mobile number. Sending it for the Authentication.");
+			        	$("#idMobile").val(""+localStorage.mobileNo);
 			        	
 						var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Authentication";
-				        var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Authentication xmlns="http://www.drivecarclub.com/"> <mobile>'+result+'</mobile><company_code>' + '514' + '</company_code>   </Authentication> </soap:Body></soap:Envelope>';
+				        var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Authentication xmlns="http://www.drivecarclub.com/"> <mobile>'+localStorage.mobileNo+'</mobile><company_code>' + localStorage.companyCode + '</company_code>   </Authentication> </soap:Body></soap:Envelope>';
 				                       console.log(soapRequest)
 						
 				        $.ajax({
@@ -84,96 +88,150 @@
 				            contentType: "text/xml",
 				            dataType: "xml",
 				            data: soapRequest,
-				            success: function(data, status, req, xml, xmlHttpRequest, responseXML) { 
-					            	console.log("************success:"+$(req.responseText).find('NewDataSet').find('Authentication').text());
-					            	localStorage.authenticated = $(req.responseText).find('NewDataSet').find('Authentication').text();
-					            	
-					            	successTrail();					            	
-				            	},
-				            error: processError
+				            success: authenticationSuccess,
+				            error: authenticationError
 				        });
 			        }
 			    }, function() {
 			        console.log("error");
 		});
-		
-		
-		if(localStorage.mobileNo)
-		{
-			$("#idMobile").val(""+localStorage.mobileNo);
-			$("#idMobile").attr("disabled", "disabled");		
-		}
-
-		if(localStorage.passangerName)
-		{
-			$("#idName").val(""+localStorage.passangerName);
-		}
-		
-		//if(localStorage.companyName)
-		{
-			localStorage.companyCode = 514;
-			//$("#idCName").val(""+localStorage.companyName);
-			$("#idCName").val(""+localStorage.companyCode);
-			$("#idCName").attr("disabled", "disabled");		
-		}
-		
-		if(localStorage.passangerEmail)
-		{
-			$("#idEmail").val(""+localStorage.passangerEmail);
-		}
 							
 	});
-
 	
-	function successTrail()
+	
+	function onProfileConfirm(buttonIndex)
 	{
-		console.log("************successTrail::"+localStorage.authenticated);
-		if(localStorage.authenticated=="TRUE")
+		console.log("*************buttonIndex=="+buttonIndex);
+	   		
+	    if(buttonIndex==1)
+	    {
+	    	console.log("*************buttonIndex==1");
+			navigator.app.exitApp();
+	    }//if(buttonIndex==1)
+	   	else
+	   	{
+	   		console.log("*************buttonIndex==0");
+		    //$.mobile.changePage("profilePage.html", { transition: "none" });
+		    //$('#idCreateProfilePage').trigger('create');
+		    window.location.reload(true);
+	   	}
+	    
+	}//function onConfirm(buttonIndex)    
+    
+	function mobileKeyUp(e)
+	{
+		var len = $('#idMobile').val().length;
+		
+		console.log("****************Length:"+len);
+		
+		localStorage.mobileNo = $('#idMobile').val();
+		
+		if(len==12)
 		{
-			$("#idMobile").val(""+localStorage.mobileNo);
-			$("#idMobile").attr("disabled", "disabled");
+			var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Authentication";
+	        var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Authentication xmlns="http://www.drivecarclub.com/"> <mobile>'+localStorage.mobileNo+'</mobile></Authentication> </soap:Body></soap:Envelope>';
+	                       console.log(soapRequest)
+			
+	        $.ajax({
+	            type: "POST",
+	            url: wsUrl,
+	            contentType: "text/xml",
+	            dataType: "xml",
+	            data: soapRequest,
+	            success: authenticationSuccess,
+	            error: authenticationError
+	        });
+
+		}
+
+	}
+	
+	function mobileKeyDown(e)
+	{
+	
+		var e = event || window.event;  // get event object
+    	var key = e.keyCode || e.which; // get key cross-browser
+    
+    	//If backspace use it
+    	if(key==8)
+    	{
+    		return;
+    	}
+    
+		var len = $('#idMobile').val().length;
+		console.log("****************Length:"+len);
+		
+		if(len==12)//ten digits already entered
+		{
+			alert("You cannot enter more than 12 digits as Mobile number");
+	        if (e.preventDefault) e.preventDefault(); //normal browsers
+	            e.returnValue = false; //IE 
+			return;			
 		}
 	}
 	
-	function processSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
-    	alert("*********************"+req.responseText);
+	function authenticationSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
+    	//alert("*********************"+req.responseText);
+    	
+    	console.log("************success:"+$(req.responseText).find('NewDataSet').find('Authentication').text());
+    	localStorage.authenticated = $(req.responseText).find('NewDataSet').find('Authentication').text();
+    	
+    	if(localStorage.authenticated=="TRUE")
+		{
+			//Storing details in the local storage
+	    	localStorage.mobileNo = $(req.responseText).find('NewDataSet').find('GuestMobile').text();
+	    	localStorage.passangerName = $(req.responseText).find('NewDataSet').find('GuestName').text();
+	    	localStorage.companyName = $(req.responseText).find('NewDataSet').find('Company_name').text();
+	    	localStorage.companyCode = $(req.responseText).find('NewDataSet').find('CompanyCode').text();
+	    	localStorage.passangerEmail = $(req.responseText).find('NewDataSet').find('GuestEmailID').text();
+	    	localStorage.GuestCode = $(req.responseText).find('NewDataSet').find('GuestCode').text();
+	    	
+	    	//Assigning details to objects
+			if(localStorage.mobileNo)
+			{
+				$("#idMobile").val(""+localStorage.mobileNo);
+				$("#idMobile").attr("disabled", "disabled");		
+			}
+	
+			if(localStorage.passangerName)
+			{
+				$("#idName").val(""+localStorage.passangerName);
+			}
+			
+			if(localStorage.companyName)
+			{
+				$("#idCName").val(""+localStorage.companyName);
+				$("#idCName").attr("disabled", "disabled");		
+			}
+			
+			if(localStorage.passangerEmail)
+			{
+				$("#idEmail").val(""+localStorage.passangerEmail);
+			}
+			
+			$('#idCreatProfileNext').removeAttr('disabled');    				
+		}
+		else
+		{
+			alert("It is not a registered Mobile number. Please enter valid mobile number..");
+			$("#idMobile").select();
+			return;
+		}		
 
-        $(req.responseText )
-        .find('NewDataSet')
-        .each(function(){
-            $(this).find('Authentication')
-            .each(function(i){
-				
-            console.log("*************************"+$(this).text());            
-            });
-
-        });
-        
     }
 
-    function processError(data, status, req) {
-        alert(req.responseText + " " + status);
+    function authenticationError(data, status, req) {
+        /*alert(req.responseText + " " + status);
         console.log("Data::"+data);
         console.log("Status::"+status);
-        console.log("Request::"+req);
-    } 
-		
-    
-    function onCreateProfileSuccess()
-	{
-		console.log("Create Profile Query Success!");
-	}
-
-	function onCreateProfileError()
-	{
-		console.log("Create Profile Query Failed!");
-	}
-	
-    // Populate the database 
-    function createpProfile(tx)
-    {
-         tx.executeSql('DROP TABLE IF EXISTS PROFILE');
-         tx.executeSql('CREATE TABLE IF NOT EXISTS PROFILE (id INTEGER PRIMARY KEY , mobile, cName, name, eMail)');
-         tx.executeSql("INSERT INTO PROFILE ( mobile, cName, name, eMail) VALUES (?,?,?,?)", ['9273744039', 'Magneto', 'Sachin', 'sachin.mohite@gmail.com']);
-    }//function createTable(tx)	
-    
+        console.log("Request::"+req);*/
+        
+        //alert("Unable to Proceed. Please confirm if internet connection is active..");
+        
+        		navigator.notification.confirm(
+							'Please reload after activating the internet or Close the application.',  // message
+							onProfileConfirm,              // callback to invoke with index of button pressed
+							'Unable to Proceed',            // title
+							'Close, Reload'          // buttonLabels
+						);
+    }	

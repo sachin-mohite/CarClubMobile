@@ -5,6 +5,8 @@ $("#idSelectPackagePage").live('pageinit',function(){
 		
 		//console.log("*******************create profile::"+$(this).attr("indx"));	
 		
+		sessionStorage.TarrifRate = $(this).attr("Rate");
+		
 		$.mobile.changePage("bookNowPage.html", { transition: "none" });
 		
 	});
@@ -39,12 +41,21 @@ function selectPackageSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 	//alert("*********************"+req.responseText);
 	console.log("*********************"+req.responseText);
 	
-		var options="";
-        var arrTarrifCode=[];
-        var arrTarrifName=[];
-        var arrRate=[];
-        var arrExtraKMRate=[];
-        var arrExtraHRRate=[];        
+	var options="";
+    var arrTarrifCode=[];
+    var arrTarrifName=[];
+    var arrRate=[];
+    var arrExtraKMRate=[];
+    var arrExtraHRRate=[];        
+        
+    if($(req.responseText).find('NewDataSet').find('STATUS').text()=="NO PACKAGE AVAILABLE")
+    {
+    	options = '<div data-role="fieldcontain" data-position="inline"><label style="color:#045BA8;">You dont have any package to show..</label></div>';
+    	$('#idPackageContents').append(options);
+	    $('#idPackageContents').trigger("create"); 
+    }   
+    else
+    {          
         
         $(req.responseText )
         .find('NewDataSet')
@@ -83,11 +94,13 @@ function selectPackageSuccess(data, status, req, xml, xmlHttpRequest, responseXM
    
         for(i=0;i<arrTarrifCode.length;i++)
         {			
-			options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Package Name:' +arrTarrifName[i]+	'</label><br>Rate:'+arrRate[i]+'<br>Extra HR Rate:'+arrExtraHRRate[i]+'<br>	Extra KM Rate:'+arrExtraKMRate[i]+'<br>	Service Type:'+'Local - within city limits'+'<br>	<a data-role="button" href="#" id="idBookNowButton'+i+'" Tariff_Code="'+arrTarrifCode[i]+'" Package_Name="'+arrTarrifName[i]+'" Rate="'+arrRate[i]+'" Extra_Km_Rate="'+arrExtraKMRate[i]+'" Extra_Hr_Rate="'+arrExtraHRRate[i]+'" class="bookNowClass" data-transition="none">Book Now</a></div>';
+			options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Package Name:' +arrTarrifName[i]+	'</label><br>Rate: Rs. '+arrRate[i]+'<br>Extra HR Rate: Rs. '+arrExtraHRRate[i]+'<br>	Extra KM Rate: Rs. '+arrExtraKMRate[i]+'<br>	Service Type:'+sessionStorage.ServiceType+'<br>	<a data-role="button" href="#" id="idBookNowButton'+i+'" Tariff_Code="'+arrTarrifCode[i]+'" Package_Name="'+arrTarrifName[i]+'" Rate="'+arrRate[i]+'" Extra_Km_Rate="'+arrExtraKMRate[i]+'" Extra_Hr_Rate="'+arrExtraHRRate[i]+'" class="bookNowClass" data-transition="none">Book Now</a></div>';
 		}  
 		console.log("Options:"+options);
 	    $('#idPackageContents').append(options);
 	    $('#idPackageContents').trigger("create");
+	    
+	}
 }
 
 function selectPackageError(data, status, req) {

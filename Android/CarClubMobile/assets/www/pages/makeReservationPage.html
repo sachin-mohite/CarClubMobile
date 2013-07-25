@@ -1,6 +1,6 @@
 
 <!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idMakeReservationPage" style="background:url(../images/inner_page_bg.png) repeat-y;">
+		<div data-role="page" data-theme="b" id="idMakeReservationPage" data-position="fixed" style="background:url(../images/inner_page_bg.png) repeat-y;">
 		
 			<!-- Page Header Start -->
 			<div id="idHeader" data-role="header" data-position="fixed" class="ui-bar ui-bar-b">
@@ -22,7 +22,7 @@
 						<label for="city" style="color:#045BA8;">
 						CITY
 						</label>
-			            <select name="pageselect" id="idCityselect" data-native-menu="false">
+			            <select name="pageselect" id="idCityselect" data-native-menu="false" style="text-align:left; float:left;">
 			            </select>
 					</div>
 					
@@ -30,7 +30,7 @@
 						<label for="cType" style="color:#045BA8;">
 						CAR TYPE
 						</label>
-			            <select name="pageselect" id="idCarType" data-native-menu="false">
+			            <select name="pageselect" id="idCarType" data-native-menu="false" align="left">
 			            </select>
 					</div>
 					
@@ -38,14 +38,20 @@
 						<label for="pickupTime" style="color:#045BA8;">
 						PICK UP TIME
 						</label>
-						<input type="time" name="pickupTime" id="idPickupTime" placeholder="HH:MM" value=""/>
+						<input type="time" name="pickupTime" id="idPickupTime" placeholder="HH:MM[00/15/30/45]" value=""/>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
 						<label for="date" style="color:#045BA8;">
 						REPORTING DATE
 						</label>
-						<input type="date" name="date" id="idDate" value="" placeholder="DD/MM/YYYY" min="2013-04-30"/>
+						<!--input type="date" name="date" onblur="changeDateFormat(this)" id="idDate" value="" placeholder="DD/MM/YYYY" value="31/01/2013"/>
+						<input name="demo" id="demo" class="i-txt" />
+						<a href="#" id="clear" class="btn btn-blue"><span class="btn-i">Clear</span></a>
+						<a href="#" id="show" class="btn btn-blue"><span class="btn-i">Show</span></a-->
+						
+						<input name="demo" id="idDate" class="demo-test-date demo-test-datetime demo-test-time demo-test-credit" />						
+						
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">
@@ -60,7 +66,8 @@
 						<label style="color:#045BA8;">
 						AREA
 						</label>
-						<textarea cols="40" rows="8" name="textarea" id="idArea">
+						
+						<textarea name="textarea" id="idArea" align="left">
 						</textarea>
 					</div>
 					

@@ -3,11 +3,31 @@ $("#idBookNowPage").live('pageinit',function(){
 	$('#idBookNowdDone').live('touchstart',function(){
 		console.log("********************idBookNowdDone");
 		
+		//validations
+		if($('#idExpDate').val()=="" || $('#idCreditCardNo').val()=="")
+		{
+			alert("Please enter all the fields..");
+			return;
+		}
+				
+		if(isNaN($('#idCreditCardNo').val())){
+			alert("Only numbers are allowed in  Credit Card feild");
+			$('#idCreditCardNo').select();
+			return;
+		}
 		
+		if(isValidMmYyyy($('#idExpDate').val())==false)
+		{
+			alert("Invalid date format. Please reenter the date and submit.");
+			$('#idExpDate').select();
+			return;
+		}
+		
+				
 		var expDate = $('#idExpDate').val();
 		
-		var yf=expDate.split("/")[0];           
-		var mf=expDate.split("/")[1];
+		var yf=expDate.split("/")[1];           
+		var mf=expDate.split("/")[0];
 		
 		sessionStorage.CreditCardNo = $('#idCreditCardNo').val();
 		sessionStorage.CreditCardExpiryMonth = mf;
@@ -29,6 +49,11 @@ $("#idBookNowPage").live('pageinit',function(){
 });
 
 $("#idBookNowPage").live('pagebeforeshow',function(){
+
+		if(sessionStorage.TarrifRate)
+		{
+			$("#idEstimatedCost").val("Rs. "+sessionStorage.TarrifRate);
+		}		
 		
 		if(localStorage.CreditCardNo)
 		{
@@ -85,11 +110,16 @@ function bookNowSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
        console.log("*************************"+$(this).text());
     });	
     
-    sessionStorage.CurrentBookingID = $(this).text();
-    
-    alert("Your booking is done..");
-    $.mobile.changePage("mainMenuPage.html", { transition: "none" });
-	
+   if($(this).text()!="")
+   {
+		alert("Reservation done..");
+   }
+   else
+   {
+		alert("We are not able to make this Reservation..");
+   }
+
+	$.mobile.changePage("mainMenuPage.html", { transition: "none" });
 }
 
 function bookNowError(data, status, req) {

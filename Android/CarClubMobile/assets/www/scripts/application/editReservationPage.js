@@ -6,6 +6,8 @@ $("#idEditReservationPage").live('pageinit',function(){
 		console.log("*******************create profile::"+$(this).attr("BookingNum"));	
 		
 		sessionStorage.editBookingNum = $(this).attr("BookingNum");
+		
+		$.mobile.changePage("updateBooking.html", { transition: "none" });
 				
 	});
 

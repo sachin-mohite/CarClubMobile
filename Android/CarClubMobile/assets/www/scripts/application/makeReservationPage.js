@@ -6,9 +6,39 @@
 		$('#idBook').live('touchstart',function(){
 			$.mobile.changePage("mainMenuPage.html", { transition: "none" });
 		});	
-				
 		
 		$('#idMakeReservationNext').live('touchstart',function(){
+			
+			//validations
+			if($('#idDate').val()=="" || $('#idPickupTime').val()=="" || $('#idArea').val()=="")
+			{
+				alert("Please enter all the fields..");
+				return;
+			}
+			
+			if(isValidateHhMm($('#idPickupTime').val())==false)
+			{
+				alert("Invalid time format. Please reenter the time and submit.");
+				return;
+			}
+			
+			var myArray = ['00','15','30','45'],
+			needle = $('#idPickupTime').val().split(':')[1],
+			index = indexOf.call(myArray, needle); // 1	
+			
+			if( index==-1)
+			{
+				alert("Minutes can contain only 00/15/30/45.");
+				return;
+			}
+			
+			
+			/*if(isValidDate($('#idDate').val())==false)
+			{
+				alert("Invalid date format. Please reenter the date and submit.");
+				return;
+			}*/
+						
 			//Dummy
 			sessionStorage.CCType = "Amex";
 			sessionStorage.GuestCode = 291;
@@ -31,7 +61,7 @@
 			
 			//From User profile
 			sessionStorage.ContactNo = localStorage.mobileNo;
-			sessionStorage.CompanyCode = localStorage.companyName;
+			sessionStorage.CompanyCode = localStorage.companyCode;
 			sessionStorage.EmailID = localStorage.passangerEmail;
 		
 			$.mobile.changePage("selectPackage.html", { transition: "none" });
@@ -69,6 +99,7 @@
 	});
 
 	$("#idMakeReservationPage").live('pagebeforeshow',function(){
+		
 		//City
 		var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=City";
         var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <City xmlns="http://www.drivecarclub.com/"> <Company_Code>' + '514' + '</Company_Code>   </City> </soap:Body></soap:Envelope>';
@@ -234,3 +265,38 @@
         console.log("Status::"+status);
         console.log("Request::"+req);
     }
+    
+    
+	/*function checkdate(input){
+	    var validformat=/^\d{2}\/\d{2}\/\d{4}$/ //Basic check for format validity
+	    var returnval=false;
+	    if (!validformat.test(input.value))
+	        alert("Invalid Date Format. Please correct and submit again.")
+	    else{ //Detailed check for valid date ranges
+	        var monthfield=input.value.split("/")[0]
+	        var dayfield=input.value.split("/")[1]
+	        var yearfield=input.value.split("/")[2]
+	        var dayobj = new Date(yearfield, monthfield-1, dayfield)
+	        if ((dayobj.getMonth()+1!=monthfield)||(dayobj.getDate()!=dayfield)||(dayobj.getFullYear()!=yearfield))
+	            alert("Invalid Day, Month, or Year range detected. Please correct and submit again.")
+	        else
+	            returnval=true
+	    }
+	    if (returnval==false) input.select()
+	        return returnval
+	} */   
+	
+	function changeDateFormat(thiss)
+	{
+		console.log("****************"+$(thiss).val());
+		
+		if(checkInput($(thiss).attr('type')))
+		{
+			console.log("*********************Supported:"+$(thiss).attr('type'));
+		}
+		else
+		{
+			console.log("*********************Not Supported:"+$(thiss).attr('type'));
+		}
+	}
+

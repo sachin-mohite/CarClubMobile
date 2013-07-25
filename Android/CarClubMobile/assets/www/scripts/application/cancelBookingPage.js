@@ -137,7 +137,7 @@ function cancelConfirmSuccess(data, status, req, xml, xmlHttpRequest, responseXM
        console.log("*************************"+$(this).text());
     });	
     
-    if($(this).text()=="true")    
+    if($(req.responseText).find('NewDataSet').find('BkStatus').text()=="True")    
     	alert("Your booking is canceled..");
     else
     	alert("Your booking cannot be canceled..");

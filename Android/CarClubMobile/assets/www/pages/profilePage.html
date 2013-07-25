@@ -16,7 +16,7 @@
 					<label for="cname" style="color:#045BA8;">
 					MOBILE NO
 					</label>
-					<input type="number" name="mname" id="idMobile" value="" required/>
+					<input type="number" onKeyUp="mobileKeyUp(event)" onKeyDown="mobileKeyDown(event)" name="mname" id="idMobile" value="91" required/>
 				   </div>
 				       
 				   <div data-role="fieldcontain" data-position="inline">
@@ -30,7 +30,7 @@
 						<label for="cname" style="color:#045BA8;">
 						COMPANY NAME
 						</label>
-						<input type="text" name="cname" id="idCName" value="" required/>
+						<input type="text" name="cname" id="idCName" value="" disabled="disabled" required/>
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">

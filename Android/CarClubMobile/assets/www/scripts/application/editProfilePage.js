@@ -24,7 +24,7 @@
 			
 			if($('#idCName').val()!="")
 			{
-				localStorage.companyCode = $('#idCName').val();
+				localStorage.companyName = $('#idCName').val();
 			}
 			else
 			{
@@ -43,9 +43,28 @@
 				return;
 			}
 			
-			//db.transaction(createTable, onCreateProfileError, onCreateProfileSuccess);	
+			var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=SaveProfile";
+		    var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"> <soap:Body> <SaveProfile xmlns="http://www.drivecarclub.com/"> <Companyname>' + localStorage.companyCode + '</Companyname> <MobileNo>'+localStorage.mobileNo+'</MobileNo><EmailID>'+localStorage.passangerEmail+ '</EmailID><GuestName>'+localStorage.passangerName+'</GuestName> </SaveProfile> </soap:Body></soap:Envelope>';
+		                       console.log(soapRequest)
 			
-			$.mobile.changePage("mainMenuPage.html", { transition: "none" });
+		    $.ajax({
+		        type: "POST",
+		        url: wsUrl,
+		        contentType: "text/xml",
+		        dataType: "xml",
+		        data: soapRequest,
+		        success: editProfileSuccess,
+		        error: editProfileError
+		    });
+			
+			//db.transaction(createTable, onCreateProfileError, onCreateProfileSuccess);
+			
+			setTimeout(function() {
+		        // Pass functionParam to function - $(this) will 
+		        // be out of scope when the function is called
+		        $.mobile.changePage("mainMenuPage.html", { transition: "none" });
+		    }, 300);
+			
 		});	
 		
 		 $("#idWebServices").live('touchstart',function(){
@@ -73,17 +92,17 @@
 			//$("#idName").attr("disabled", "disabled");	
 		}
 		
-		if(localStorage.companyCode)
+		/*if(localStorage.companyCode)
 		{
 			$("#idCName").val(""+localStorage.companyCode);
 			//$("#idCName").attr("disabled", "disabled");		
-		}
+		}*/
 		
-		/*if(localStorage.companyName)
+		if(localStorage.companyName)
 		{
 			$("#idCName").val(""+localStorage.companyName);
-			//$("#idCName").attr("disabled", "disabled");		
-		}*/	
+			$("#idCName").attr("disabled", "disabled");		
+		}	
 			
 		if(localStorage.passangerEmail)
 		{
@@ -92,3 +111,18 @@
 		}
 		
 	});
+	
+	function editProfileSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
+	//alert("*********************"+req.responseText);
+	console.log("*********************"+req.responseText);
+	
+	alert(""+$(req.responseText).find('NewDataSet').find('Profile_Saved').text());
+	
+}
+
+function editProfileError(data, status, req) {
+    alert(req.responseText + " " + status);
+    console.log("Data::"+data);
+    console.log("Status::"+status);
+    console.log("Request::"+req);
+} 

@@ -40,13 +40,21 @@ function futureBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 	//alert("*********************"+req.responseText);
 	console.log("*********************"+req.responseText);
 	
-		var options="";
-        var arrActualBkNum=[];
-        var arrReportingDate=[];
-        var arrReportingTime=[];
-        var arrReportingAdd=[];
-        ///var arrExtraHRRate=[];        
-        
+	var options="";
+    var arrActualBkNum=[];
+    var arrReportingDate=[];
+    var arrReportingTime=[];
+    var arrReportingAdd=[];
+    ///var arrExtraHRRate=[];
+    
+    if($(req.responseText).find('NewDataSet').find('State').text()=="False")
+    {
+    	options = '<div data-role="fieldcontain" data-position="inline"><label style="color:#045BA8;">You dont have any bookings to show..</label></div>';
+    	$('#idFutureBooking').append(options);
+	    $('#idFutureBooking').trigger("create"); 
+    }   
+    else
+    {        
         $(req.responseText )
         .find('NewDataSet')
         .each(function(){
@@ -83,7 +91,10 @@ function futureBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 		}  
 		console.log("Options:"+options);
 	    $('#idFutureBooking').append(options);
-	    $('#idFutureBooking').trigger("create");
+	    $('#idFutureBooking').trigger("create");        
+    
+    }  
+
 }
 
 function futureBookingError(data, status, req) {
