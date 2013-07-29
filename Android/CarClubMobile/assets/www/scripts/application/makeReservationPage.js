@@ -1,4 +1,8 @@
 	$("#idMakeReservationPage").live('pageinit',function(){
+	        
+        customDatePicker('idDate');
+        customTimePicker('idPickupTime');
+		
 		$('#idBack').live('touchstart',function(){
 			$.mobile.changePage("mainMenuPage.html", { transition: "none" });
 		});

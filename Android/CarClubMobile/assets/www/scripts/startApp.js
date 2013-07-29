@@ -152,7 +152,7 @@
             theme: 'default',
             display: 'modal',
             timeFormat: 'HH:ii',
-            mode: 'scroller'
+            mode: 'Clickpick'
 
         });
     }
@@ -168,8 +168,28 @@
                daysOfMonth: ['5/1', '12/24', '12/25']
            },*/
            dateFormat: "dd/mm/yyyy",
-           theme: 'default',
+           theme: 'Android ICS Light',
            display: 'modal',
-           mode: 'scroller'
+           mode: 'Clickpick',
+           showOnFocus:'true'
        });
    }	
+   
+   function customCCExpDatePicker(inputId)
+   {
+   
+   		console.log("***************"+inputId);
+       $('#'+inputId).scroller({
+           preset: 'date',
+           /*invalid: {
+               daysOfWeek: [0, 6],
+               daysOfMonth: ['5/1', '12/24', '12/25']
+           },*/
+	        dateOrder: 'mmyy',
+	        dateFormat: 'mm/yyyy',
+           theme: 'Android ICS Light',
+           display: 'modal',
+           mode: 'Clickpick',
+           showOnFocus:'true'
+       });
+   }	   

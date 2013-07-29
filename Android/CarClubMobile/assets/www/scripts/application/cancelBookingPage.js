@@ -50,43 +50,55 @@ function cancelBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
         var arrReportingAdd=[];
         ///var arrExtraHRRate=[];        
         
-        $(req.responseText )
-        .find('NewDataSet')
-        .each(function(){
-            $(this).find('Actual_Bk_Num')
-            .each(function(i){
-            	arrActualBkNum.push($(this).text());			
-            	console.log("*************************"+arrActualBkNum[i]);            
-            });
-
-            $(this).find('ReportingDate')
-            .each(function(i){
-            	arrReportingDate.push($(this).text());			
-            	console.log("*************************"+arrReportingDate[i]);            
-            });
-            
-           $(this).find('ReportingTime')
-            .each(function(i){
-            	arrReportingTime.push($(this).text());			
-            	console.log("*************************"+arrReportingTime[i]);            
-            });
-            
-			$(this).find('ReportingAddress')
-            .each(function(i){
-            	arrReportingAdd.push($(this).text());			
-            	console.log("*************************"+arrReportingAdd[i]);            
-            });
-
-        });
-   
-        for(i=0;i<arrReportingAdd.length;i++)
-        {			
-			//options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br><a data-role="button" href="#" id="idBookNowButton'+i+'" Tariff_Code="'+arrTarrifCode[i]+'" Package_Name="'+arrTarrifName[i]+'" Rate="'+arrRate[i]+'" Extra_Km_Rate="'+arrExtraKMRate[i]+'" Extra_Hr_Rate="'+arrExtraHRRate[i]+'" class="bookNowClass" data-transition="none">Book Now</a></div>';
-        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" class="cancelBookClass">CANCEL BOOKING</a></div>';
-		}  
-		console.log("Options:"+options);
-	    $('#idCancelBookingContainer').append(options);
-	    $('#idCancelBookingContainer').trigger("create");
+        if($(req.responseText).find('NewDataSet').find('State').text()=="False")
+	    {
+	    	options = '<div data-role="fieldcontain" data-position="inline"><label style="color:#045BA8;">You dont have any bookings to show..</label></div>';
+	    	$('#idCancelBookingContainer').append(options);
+		    $('#idCancelBookingContainer').trigger("create"); 
+	    }   
+	    else
+	    {        
+	        $(req.responseText )
+	        .find('NewDataSet')
+	        .each(function(){
+	            $(this).find('Actual_Bk_Num')
+	            .each(function(i){
+	            	arrActualBkNum.push($(this).text());			
+	            	console.log("*************************"+arrActualBkNum[i]);            
+	            });
+	
+	            $(this).find('ReportingDate')
+	            .each(function(i){
+	            	arrReportingDate.push($(this).text());			
+	            	console.log("*************************"+arrReportingDate[i]);            
+	            });
+	            
+	           $(this).find('ReportingTime')
+	            .each(function(i){
+	            	arrReportingTime.push($(this).text());			
+	            	console.log("*************************"+arrReportingTime[i]);            
+	            });
+	            
+				$(this).find('ReportingAddress')
+	            .each(function(i){
+	            	arrReportingAdd.push($(this).text());			
+	            	console.log("*************************"+arrReportingAdd[i]);            
+	            });
+	
+	        });
+	   
+	        for(i=0;i<arrReportingAdd.length;i++)
+	        {			
+				//options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br><a data-role="button" href="#" id="idBookNowButton'+i+'" Tariff_Code="'+arrTarrifCode[i]+'" Package_Name="'+arrTarrifName[i]+'" Rate="'+arrRate[i]+'" Extra_Km_Rate="'+arrExtraKMRate[i]+'" Extra_Hr_Rate="'+arrExtraHRRate[i]+'" class="bookNowClass" data-transition="none">Book Now</a></div>';
+	        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" class="cancelBookClass">CANCEL BOOKING</a></div>';
+			}  
+			console.log("Options:"+options);
+		    $('#idCancelBookingContainer').append(options);
+		    $('#idCancelBookingContainer').trigger("create");
+		   
+		}
+		
+		$.mobile.loading('hide');
 }
 
 function cancelBookingError(data, status, req) {
@@ -94,6 +106,7 @@ function cancelBookingError(data, status, req) {
     console.log("Data::"+data);
     console.log("Status::"+status);
     console.log("Request::"+req);
+    $.mobile.loading('hide');
 }   
 
 function onCancelBookConfirm(buttonIndex)

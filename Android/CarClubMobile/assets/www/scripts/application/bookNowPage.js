@@ -1,5 +1,7 @@
 $("#idBookNowPage").live('pageinit',function(){
 	
+	customCCExpDatePicker('idExpDate');
+	
 	$('#idBookNowdDone').live('touchstart',function(){
 		console.log("********************idBookNowdDone");
 		
