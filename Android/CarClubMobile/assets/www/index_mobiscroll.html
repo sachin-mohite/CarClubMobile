@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <title>Date Time</title>
+        
+        <link  rel="stylesheet" type="text/css" href="scripts/mobiscroll/css/mobiscroll-2.0rc3.custom.min.css">
+        <script src="scripts/jqueryMobile/js/jquery-1.8.1.min.js"></script>
+        <script type="text/javascript" src="scripts/mobiscroll/date.js"></script>
+        <script type="text/javascript" src="scripts/mobiscroll/js/mobiscroll-2.0rc3.custom.min.js"></script>
+       <script>
+        
+      function customTimePicker(inputId)
+        {
+            
+			$('#'+inputId).scroller({
+                preset: 'time',
+                theme: 'default',
+                display: 'modal',
+                timeFormat: 'HH:ii:ss',
+                mode: 'scroller'
+
+            });
+        }
+       
+       function customDatePicker(inputId)
+       {
+           $('#'+inputId).scroller({
+               preset: 'date',
+               /*invalid: {
+                   daysOfWeek: [0, 6],
+                   daysOfMonth: ['5/1', '12/24', '12/25']
+               },*/
+               dateFormat: "mm/dd/yyyy",
+               theme: 'default',
+					 dateOrder: 'mmD ddyy',
+               display: 'modal',
+               mode: 'scroller'
+           });
+       }
+        
+     
+     </script>   
+        
+        
+        
+    </head>
+    <body>
+    <input type="text" id="gamedate" name="date"  onclick="customDatePicker('gamedate')"/>
+	<input type="text" id="gametime" name="datetime"  onclick="customTimePicker('gametime')"/>
+      
+       
+        
+    </body>
+</html>

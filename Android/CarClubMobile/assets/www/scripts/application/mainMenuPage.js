@@ -2,3 +2,8 @@
 
 		
 	});
+
+	$("#idMainMenuPage").live('pageremove',function(){
+		$.mobile.loading('show');
+	});
+	

@@ -16,6 +16,9 @@ $("#idSelectPackagePage").live('pageinit',function(){
 $("#idSelectPackagePage").live('pagebeforeshow',function(){
 
 	console.log("***************In idSelectPackagePage:pagebeforeshow");
+	
+	$.mobile.loading('show');
+	
 	//City
 	//var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Package";
     //var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"> <soap:Body> <Package xmlns="http://www.drivecarclub.com/"> <Company_Code>' + localStorage.companyCode + '</Company_Code><Car_Type_Code>'  +sessionStorage.CarTypeCode+ '</Car_Type_Code><City_Code>' +sessionStorage.CityCode+ '</City_Code><Service_type>'+sessionStorage.ServiceType+'</Service_type></Package> </soap:Body></soap:Envelope>';
@@ -101,6 +104,8 @@ function selectPackageSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 	    $('#idPackageContents').trigger("create");
 	    
 	}
+	
+	$.mobile.loading('hide');
 }
 
 function selectPackageError(data, status, req) {

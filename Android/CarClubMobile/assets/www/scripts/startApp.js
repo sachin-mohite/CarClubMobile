@@ -13,6 +13,7 @@
 		}
 		else {
 			$.mobile.changePage("pages/editprofilePage.html", { transition: "none" });
+			$.mobile.loading('show');
 		}	
 		
 		//$.mobile.changePage("pages/selectPackage.html", { transition: "none" });
@@ -38,7 +39,6 @@
 		sessionStorage.Address = "";
 		sessionStorage.ReportingDate  = "";
 		sessionStorage.ServiceType = "";
-		sessionStorage.bookedby  = "";
 	}
 	
 	function clearProfile()
@@ -143,3 +143,33 @@
 	    input.setAttribute("type", type);
 	    return input.type == type;
 	}
+	
+  function customTimePicker(inputId)
+    {
+        
+		$('#'+inputId).scroller({
+            preset: 'time',
+            theme: 'default',
+            display: 'modal',
+            timeFormat: 'HH:ii',
+            mode: 'scroller'
+
+        });
+    }
+   
+   function customDatePicker(inputId)
+   {
+   
+   		console.log("***************"+inputId);
+       $('#'+inputId).scroller({
+           preset: 'date',
+           /*invalid: {
+               daysOfWeek: [0, 6],
+               daysOfMonth: ['5/1', '12/24', '12/25']
+           },*/
+           dateFormat: "dd/mm/yyyy",
+           theme: 'default',
+           display: 'modal',
+           mode: 'scroller'
+       });
+   }	

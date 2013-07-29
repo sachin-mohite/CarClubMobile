@@ -67,15 +67,7 @@
 			
 		});	
 		
-		 $("#idWebServices").live('touchstart',function(){
-		 
-		 	//Bookings_History
-            //var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Bookings_History";
-            //var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Bookings_History xmlns="http://www.drivecarclub.com/"> <mobile>' + '919971793539' + '</mobile>  <company_code>' + '514' + '</company_code>   </Bookings_History> </soap:Body></soap:Envelope>';
-                           console.log(soapRequest)
-
-        });
-		
+	
 	});
 	
 	$("#idEditProfilePage").live('pagebeforeshow',function(){
@@ -110,9 +102,11 @@
 			//$("#idEmail").attr("disabled", "disabled");			
 		}
 		
+		$.mobile.loading('hide');
+		
 	});
 	
-	function editProfileSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
+function editProfileSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 	//alert("*********************"+req.responseText);
 	console.log("*********************"+req.responseText);
 	
