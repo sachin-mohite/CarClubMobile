@@ -1,5 +1,11 @@
 	$("#idUpdateBookingPage").live('pageinit',function(){
 		
+		$('#idDate').live('click', function() {
+		    $('#idDate').datebox('open');
+		});
+		
+		customTimePicker('idPickupTime');
+		
 		$('#idUpdateBookingNext').live('touchstart',function(){
 			
 			console.log("************************idUpdateBookingPage:idUpdateBookingNext");
@@ -62,7 +68,14 @@
 		console.log("Options:"+options);
 	    $('#labelBookingNum').append(options);
 	    $('#labelBookingNum').trigger("create");
-		
+	    
+	    
+	    $('#idDate').trigger('datebox', {'method':'set', 'value':sessionStorage.ReportingDate});
+	    //$('#idDate').val(sessionStorage.ReportingDate);
+	    $('#idPickupTime').val(sessionStorage.ReportingTime);
+	    $('#idArea').val(sessionStorage.Address);
+	    $('#idUpdateBookingBody').trigger("create");
+	
 	});
 	
 	function updateBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
@@ -83,10 +96,9 @@
 				alert("We are not able to Update this booking..");
 	       }
 	       
-	       $.mobile.changePage("mainMenuPage.html", { transition: "none" });
-	       
 	    });	
-        
+
+       $.mobile.changePage("mainMenuPage.html", { transition: "none" });        
     }
 
     function updateBookingError(data, status, req) {

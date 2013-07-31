@@ -1,69 +1,79 @@
 	$("#idEditProfilePage").live('pageinit',function(){
 		
 		$('#idEditProfileUpdate').live('touchstart',function(){
-
-			if($('#idMobile').val() !="")
-			{		
-				localStorage.mobileNo = $('#idMobile').val();			
+			$("#idEditProfileUpdate").unbind("touchstart");
+			
+			if($("#idEditProfileUpdate").val()=="UPDATE")
+			{
+				if($('#idMobile').val() !="")
+				{		
+					localStorage.mobileNo = $('#idMobile').val();			
+				}
+				else
+				{
+					alert("Please enter Mobile Number.");
+					return;
+				}
+							
+				if($('#idName').val() !="")
+				{
+					localStorage.passangerName = $('#idName').val();			
+				}
+				else
+				{
+					alert("Please enter Your Name.");
+					return;
+				}			
+				
+				if($('#idCName').val()!="")
+				{
+					localStorage.companyName = $('#idCName').val();
+				}
+				else
+				{
+					alert("Please enter Company Name.");
+					return;
+				}
+	
+			
+				if($('#idEmail').val() !="")
+				{		
+					localStorage.passangerEmail = $('#idEmail').val();
+				}
+				else
+				{
+					alert("Please enter Email Id.");
+					return;
+				}
+				
+				var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=SaveProfile";
+			    var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"> <soap:Body> <SaveProfile xmlns="http://www.drivecarclub.com/"> <Companyname>' + localStorage.companyCode + '</Companyname> <MobileNo>'+localStorage.mobileNo+'</MobileNo><EmailID>'+localStorage.passangerEmail+ '</EmailID><GuestName>'+localStorage.passangerName+'</GuestName> </SaveProfile> </soap:Body></soap:Envelope>';
+			                       console.log(soapRequest)
+				
+			    $.ajax({
+			        type: "POST",
+			        url: wsUrl,
+			        contentType: "text/xml",
+			        dataType: "xml",
+			        data: soapRequest,
+			        success: editProfileSuccess,
+			        error: editProfileError
+			    });
+				
+				setTimeout(function() {
+			        // Pass functionParam to function - $(this) will 
+			        // be out of scope when the function is called
+			        $.mobile.changePage("mainMenuPage.html", { transition: "none" });
+			    }, 300);
 			}
 			else
 			{
-				alert("Please enter Mobile Number.");
-				return;
+				setTimeout(function() {
+			        // Pass functionParam to function - $(this) will 
+			        // be out of scope when the function is called
+			        $.mobile.changePage("mainMenuPage.html", { transition: "none" });
+			    }, 300);							
 			}
-						
-			if($('#idName').val() !="")
-			{
-				localStorage.passangerName = $('#idName').val();			
-			}
-			else
-			{
-				alert("Please enter Your Name.");
-				return;
-			}			
-			
-			if($('#idCName').val()!="")
-			{
-				localStorage.companyName = $('#idCName').val();
-			}
-			else
-			{
-				alert("Please enter Company Name.");
-				return;
-			}
-
-		
-			if($('#idEmail').val() !="")
-			{		
-				localStorage.passangerEmail = $('#idEmail').val();
-			}
-			else
-			{
-				alert("Please enter Email Id.");
-				return;
-			}
-			
-			var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=SaveProfile";
-		    var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"> <soap:Body> <SaveProfile xmlns="http://www.drivecarclub.com/"> <Companyname>' + localStorage.companyCode + '</Companyname> <MobileNo>'+localStorage.mobileNo+'</MobileNo><EmailID>'+localStorage.passangerEmail+ '</EmailID><GuestName>'+localStorage.passangerName+'</GuestName> </SaveProfile> </soap:Body></soap:Envelope>';
-		                       console.log(soapRequest)
-			
-		    $.ajax({
-		        type: "POST",
-		        url: wsUrl,
-		        contentType: "text/xml",
-		        dataType: "xml",
-		        data: soapRequest,
-		        success: editProfileSuccess,
-		        error: editProfileError
-		    });
-			
-			//db.transaction(createTable, onCreateProfileError, onCreateProfileSuccess);
-			
-			setTimeout(function() {
-		        // Pass functionParam to function - $(this) will 
-		        // be out of scope when the function is called
-		        $.mobile.changePage("mainMenuPage.html", { transition: "none" });
-		    }, 300);
 			
 		});	
 		
@@ -120,3 +130,14 @@ function editProfileError(data, status, req) {
     console.log("Status::"+status);
     console.log("Request::"+req);
 } 
+
+function editProfileKeyUp(thiss)
+{
+		if(localStorage.passangerName!=$("#idName").val() || localStorage.passangerEmail!=$("#idEmail").val())
+		{
+			$("#idEditProfileUpdate").val("UPDATE");
+			//$("#idEditProfileUpdate").attr("value", "UPDATE");
+			$("#idEditProfileUpdate").button("refresh");
+		}		
+		
+}

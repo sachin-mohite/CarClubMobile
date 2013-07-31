@@ -8,7 +8,7 @@
 			<!-- Page Header End -->
 			
 			<!-- Page Body Start -->
-			<div data-role="content" >
+			<div data-role="content" id="idUpdateBookingBody">
 
 				<form action="#" method="get">
 
@@ -20,7 +20,8 @@
 						<label for="date" style="color:#045BA8;">
 						REPORTING DATE
 						</label>
-						<input type="date" name="date" id="idDate" value="" placeholder="DD/MM/YYYY" min="2013-04-30"/>
+						<!--input type="date" name="date" id="idDate" value="" placeholder="DD/MM/YYYY" min="2013-04-30"/-->
+						<input data-iconpos="left" data-options='{"useFocus": true, "useButton": false, "noButton": true, "mode":"calbox", "overrideDateFormat":"%d/%m/%Y", "defaultValue":[1,0,2001], "calHighPicked":false, "calHighToday":false, "calHighPicked": false}' data-role="datebox" id="idDate" name="date" type="date" />
 					</div>
 					
 					<div data-role="fieldcontain" data-position="inline">

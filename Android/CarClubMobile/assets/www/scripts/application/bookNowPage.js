@@ -3,6 +3,9 @@ $("#idBookNowPage").live('pageinit',function(){
 	customCCExpDatePicker('idExpDate');
 	
 	$('#idBookNowdDone').live('touchstart',function(){
+	
+		$("#idBookNowdDone").unbind("touchstart");
+		
 		console.log("********************idBookNowdDone");
 		
 		//validations
@@ -97,6 +100,8 @@ function onConfirm(buttonIndex)
 		var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"> <soap:Body> <Create_Booking xmlns="http://www.drivecarclub.com/"> <CCType>'+sessionStorage.CCType+'</CCType><Company_Code>' + sessionStorage.CompanyCode + '</Company_Code>	<ContactNo>'+sessionStorage.ContactNo+'</ContactNo>	<EmailID>'+sessionStorage.EmailID+'</EmailID><GuestName>'+sessionStorage.GuestName+'</GuestName><GuestCode>'+sessionStorage.GuestCode+'</GuestCode>	<CreditCardNo>'+sessionStorage.CreditCardNo+'</CreditCardNo><CreditCardExpiryMonth>'+sessionStorage.CreditCardExpiryMonth+'</CreditCardExpiryMonth>	<CreditcarExpiryYear>'+sessionStorage.CreditcarExpiryYear+'</CreditcarExpiryYear><CityCode>'+sessionStorage.CityCode+'</CityCode> <CategoryCode>'+sessionStorage.CategoryCode+'</CategoryCode> <CarTypeCode>'+sessionStorage.CarTypeCode+'</CarTypeCode><PickupHrs>'+sessionStorage.PickupHrs+'</PickupHrs> <PickupMin>'+sessionStorage.PickupMin+'</PickupMin>	<Address>'+sessionStorage.Address+'</Address>	<ReportingDate>'+sessionStorage.ReportingDate+'</ReportingDate>	<ServiceType>'+sessionStorage.ServiceTypeID+'</ServiceType> </Create_Booking> </soap:Body></soap:Envelope>';
 		console.log(soapRequest)
 		
+	    $.mobile.loading('show');
+	    
 	    $.ajax({
 	        type: "POST",
 	        url: wsUrl,
@@ -135,7 +140,9 @@ function bookNowSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 	   else
 	   {
 			alert("We are not able to make this Reservation..");
-	   }    
+	   }
+	   
+	   $.mobile.loading('hide'); 
 	});	
     
 	$.mobile.changePage("mainMenuPage.html", { transition: "none" });

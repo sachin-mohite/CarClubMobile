@@ -152,7 +152,10 @@
             theme: 'default',
             display: 'modal',
             timeFormat: 'HH:ii',
-            mode: 'Clickpick'
+            stepMinute: 15,
+            mode: 'Clickpick',
+            ampm: false,
+            timeWheels:'HHii'
 
         });
     }
@@ -190,6 +193,7 @@
            theme: 'Android ICS Light',
            display: 'modal',
            mode: 'Clickpick',
+			maxDate:null,
            showOnFocus:'true'
        });
    }	   

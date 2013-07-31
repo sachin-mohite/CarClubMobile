@@ -24,7 +24,7 @@
 						<label for="name" style="color:#045BA8;">
 						PASSANGER NAME
 						</label>
-						<input type="text" name="name" id="idName" value="" placeholder="jljlk" required/>
+						<input type="text" name="name" id="idName" value="" onKeyUp="editProfileKeyUp(this)" placeholder="jljlk" required/>
 					</div>
 				   
 					<div data-role="fieldcontain" data-position="inline">
@@ -38,13 +38,14 @@
 						<label for="email" style="color:#045BA8;">
 						PASSANGER EMAIL
 						</label>
-						<input type="email" name="email" id="idEmail" value="" placeholder="jljlk" required/>
+						<input type="email" name="email" id="idEmail" value="" onKeyUp="editProfileKeyUp(this)" placeholder="jljlk" required/>
 					</div>
-					
 					
 				</form>
 				
-				<a data-role="button" href="#" data-transition="none" id="idEditProfileUpdate" >UPDATE</a>
+				<a href="#" data-transition="none">
+					<input type="button" id="idEditProfileUpdate" value="NEXT"/> 
+				</a>
 			
 			</div>
 			<!-- Page Body End -->
