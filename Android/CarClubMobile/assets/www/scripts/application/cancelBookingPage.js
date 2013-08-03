@@ -87,10 +87,26 @@ function cancelBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 	
 	        });
 	   
+	   		var repDate, dd, mm, yyyy;
 	        for(i=0;i<arrReportingAdd.length;i++)
-	        {			
+	        {
+	        
+				console.log("***********************Date:"+arrReportingDate[i]);
+	        	repDate = arrReportingDate[i].split("T")[0].split("-");
+			    dd = repDate[2];
+			    mm = repDate[1]; //January is 0!	
+			    yyyy = repDate[0];
+			    if(dd<10){
+			    	dd='0'+dd;
+			    } 
+			    
+			    if(mm<10){
+			    	mm='0'+mm;
+			    }
+			    
+			    repDate = dd+'/'+mm+'/'+yyyy;	
 				//options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br><a data-role="button" href="#" id="idBookNowButton'+i+'" Tariff_Code="'+arrTarrifCode[i]+'" Package_Name="'+arrTarrifName[i]+'" Rate="'+arrRate[i]+'" Extra_Km_Rate="'+arrExtraKMRate[i]+'" Extra_Hr_Rate="'+arrExtraHRRate[i]+'" class="bookNowClass" data-transition="none">Book Now</a></div>';
-	        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" class="cancelBookClass">CANCEL BOOKING</a></div>';
+	        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+repDate+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" class="cancelBookClass">CANCEL BOOKING</a></div>';
 			}  
 			console.log("Options:"+options);
 		    $('#idCancelBookingContainer').append(options);

@@ -1,6 +1,9 @@
 $("#idBookNowPage").live('pageinit',function(){
 	
-	customCCExpDatePicker('idExpDate');
+	//customCCExpDatePicker('idExpDate');
+	$('#idExpDate').live('click', function() {
+	    $('#idExpDate').datebox('open');
+	});	
 	
 	$('#idBookNowdDone').live('touchstart',function(){
 	
@@ -66,6 +69,10 @@ $("#idBookNowPage").live('pageinit',function(){
 	
 });
 
+$("#idBookNowPage").live('pageremove',function(){
+	$.mobile.loading('show');
+});
+	
 $("#idBookNowPage").live('pagebeforeshow',function(){
 
 		if(sessionStorage.TarrifRate)
@@ -133,13 +140,13 @@ function bookNowSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
     .find('Create_BookingResult')
     .each(function(){
        console.log("*************************"+$(this).text());
-	   if($(this).text()!="")
+	   if($(req.responseText).find('NewDataSet').find('Status').text()!="")
 	   {
-			alert("Reservation done with Booking ID "+$(this).text());
+			alert("Reservation done with Booking ID "+$(req.responseText).find('NewDataSet').find('Status').text());
 	   }
 	   else
 	   {
-			alert("We are not able to make this Reservation..");
+			alert("We are not able to make this Reservation because of "+$(req.responseText).find('NewDataSet').find('Remarks').text());
 	   }
 	   
 	   $.mobile.loading('hide'); 
@@ -262,7 +269,7 @@ function ccError(data, status, req) {
 			if($('#idCreditCardNo').val().length < 16)
 			{
 				alert("Credit Card Number can not be less 16 digits. Please enter valid Credit Card Number");
-				$('#idCreditCardNo').select();
+				//$('#idCreditCardNo').select();
 			}
 			  				
 		}

@@ -28,14 +28,15 @@
 					<label for="name" style="color:#045BA8;">
 					CREDIT CARD NO
 					</label>
-					<input type="number" name="name" id="idCreditCardNo" onKeyUp="ccKeyUp(event)" onKeyDown="ccKeyDown(event)" value="" required/>
+					<input type="text" name="name" id="idCreditCardNo" onKeyUp="ccKeyUp(event)" onKeyDown="ccKeyDown(event)" value="" required/>
 					</div>
 				   
 					<div data-role="fieldcontain" data-position="inline">
 						<label for="cname" style="color:#045BA8;">
 						EXPIRY DATE
 						</label>
-						<input type="text" name="cname" id="idExpDate" placeholder="MM/YYYY" value="" required/>
+						<!--input type="text" name="cname" id="idExpDate" placeholder="MM/YYYY" value="" required/-->
+						<input name="cname" id="idExpDate" type="date" data-role="datebox" data-options='{"mode": "datebox", "useFocus": true, "useButton": false, "noButton": true, "overrideDateFormat":"%m/%Y", "overrideDateFieldOrder": ["m", "y"], "dateFormat": "mm/YYYY"}'}'>
 					</div>
 					
 				</form>
