@@ -1,5 +1,5 @@
 		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idBookNowPage" style="background:url(../images/inner_page_bg.png)  repeat-y;">
+		<div data-role="page" data-theme="b"  data-position="fixed" data-position="fixed" id="idBookNowPage" style="background:url(../images/inner_page_bg.png)  repeat-y;">
 		
 			<!-- Page Header Start -->
 			<div id="idHeader" data-role="header" data-position="fixed" class="ui-bar ui-bar-b">
@@ -17,31 +17,31 @@
 
 				<form action="#" method="get">
 				
-					<div data-role="fieldcontain" data-position="inline">
-					<label for="cname" style="color:#045BA8;">
-					ESTIMATED COST
-					</label>
-					<input type="text" name="mname" id="idEstimatedCost" value="" disabled="disabled" required/>
-				   </div>
-				       
-				   <div data-role="fieldcontain" data-position="inline">
-					<label for="name" style="color:#045BA8;">
-					CREDIT CARD NO
-					</label>
-					<input type="text" name="name" id="idCreditCardNo" onKeyUp="ccKeyUp(event)" onKeyDown="ccKeyDown(event)" value="" required/>
-					</div>
-				   
-					<div data-role="fieldcontain" data-position="inline">
+					<div data-role="fieldcontain" data-position="inline" id="idEstimatedCost">
 						<label for="cname" style="color:#045BA8;">
-						EXPIRY DATE
+						Estimated Cost :
+						</label>
+				   </div>
+				   <br>
+				       
+				   <!--div data-role="fieldcontain" data-position="inline"!-->
+					<label for="name" style="color:#045BA8;">
+					Credit Card No
+					</label>
+					<input type="number" name="name" id="idCreditCardNo" onKeyUp="ccKeyUp(event)" onKeyDown="ccKeyDown(event)" value="" required/>
+					<!--/div!-->
+				   
+					<!--div data-role="fieldcontain" data-position="inline"!-->
+						<label for="cname" style="color:#045BA8;">
+						Expiry Date
 						</label>
 						<!--input type="text" name="cname" id="idExpDate" placeholder="MM/YYYY" value="" required/-->
-						<input name="cname" id="idExpDate" type="date" data-role="datebox" data-options='{"mode": "datebox", "useFocus": true, "useButton": false, "noButton": true, "overrideDateFormat":"%m/%Y", "overrideDateFieldOrder": ["m", "y"], "dateFormat": "mm/YYYY"}'}'>
-					</div>
+						<input name="cname" id="idExpDate" type="date" data-role="datebox" data-options='{"mode": "datebox", "afterToday": true, "useFocus": true, "useButton": false, "noButton": true, "overrideDateFormat":"%m/%Y", "overrideDateFieldOrder": ["m", "y"], "dateFormat": "mm/YYYY", "centerVert": true}'}'>
+					<!--/div!-->
 					
 				</form>
 				
-				<a data-role="button" href="#" id="idBookNowdDone">DONE</a>
+				<a data-role="button" href="#" id="idBookNowdDone">Done</a>
 			</div>
 			<!-- Page Body End -->
 		

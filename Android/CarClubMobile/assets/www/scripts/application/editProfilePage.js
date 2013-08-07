@@ -1,7 +1,13 @@
+	$("#idEditProfilePage").live('pageremove',function(){
+		//$.mobile.loading('show');
+		prevPageID="";
+	});
+
+
 	$("#idEditProfilePage").live('pageinit',function(){
 		
-		$('#idEditProfileUpdate').live('touchstart',function(){
-			$("#idEditProfileUpdate").unbind("touchstart");
+		$('#idEditProfileUpdate').live('click',function(){
+			$("#idEditProfileUpdate").unbind("click");
 			
 			if($("#idEditProfileUpdate").val()=="UPDATE")
 			{
@@ -80,7 +86,9 @@
 	
 	});
 	
-	$("#idEditProfilePage").live('pagebeforeshow',function(){
+	$("#idEditProfilePage").live('pagebeforeshow',function(event, data){
+
+		prevPageID = data.prevPage.attr('id');
 
 		if(localStorage.mobileNo)
 		{
@@ -125,10 +133,11 @@ function editProfileSuccess(data, status, req, xml, xmlHttpRequest, responseXML)
 }
 
 function editProfileError(data, status, req) {
-    alert(req.responseText + " " + status);
+    /*alert(req.responseText + " " + status);
     console.log("Data::"+data);
     console.log("Status::"+status);
-    console.log("Request::"+req);
+    console.log("Request::"+req);*/
+	alert("Unable to update Profile. Please confirm if Internet connection is active..");
 } 
 
 function editProfileKeyUp(thiss)

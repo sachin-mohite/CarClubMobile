@@ -101,7 +101,7 @@
 			w._minStepFix();
 			w._dbox_vhour(typeof w._dbox_delta !== 'undefined'?w._dbox_delta:1);
 			
-			if ( o.mode === 'datebox' ) { $('<div class="'+uid+'header"><h4>'+w._formatter(w.__('headerFormat'), w.theDate)+'</h4></div>').appendTo(w.d.intHTML); }
+			//if ( o.mode === 'datebox' ) { $('<div class="'+uid+'header"><h4>'+w._formatter(w.__('headerFormat'), w.theDate)+'</h4></div>').appendTo(w.d.intHTML); }
 			
 			for(i=0; i<=w.fldOrder.length; i++) {
 				tmp = ['a','b','c','d','e','f'][i];

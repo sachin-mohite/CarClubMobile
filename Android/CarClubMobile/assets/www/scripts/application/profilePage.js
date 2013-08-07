@@ -10,7 +10,7 @@
 			{
 				alert("Please enter Mobile Number.");
 				$('#idMobile').select()
-				return;
+				return true;
 			}
 						
 			if($('#idName').val() !="")
@@ -21,7 +21,7 @@
 			{
 				alert("Please enter Your Name.");
 				$('#idName').select();
-				return;
+				return true;
 			}			
 			
 			if($('#idCName').val()!="")
@@ -32,7 +32,7 @@
 			{
 				alert("Please enter valid Mobile number. We are not able to verify your identity.");
 				$('#idCName').select();
-				return;
+				return true;
 			}
 
 		
@@ -44,7 +44,7 @@
 			{
 				alert("Please enter Email Id.");
 				$('#idEmail').select();
-				return;
+				return true;
 			}
 			
 			setTimeout(function() {
@@ -60,15 +60,17 @@
 	
 
 	$("#idCreateProfilePage").live('pagebeforeshow',function(){
+	
+		console.log("*************idCreateProfilePage==pagebeforeshow");
 		
 		var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
 			telephoneNumber.get(function(result) {
 			        
 			        if(result==null || result==""){
 			        	console.log("result = Blank Response");
-			        	alert("Application is unable to fetch mobile number from the handset. Please enter it manually.");			        	
+			        	//alert("Application is unable to fetch mobile number from the handset. Please enter it manually.");			        	
 			        	$("#idMobile").select();
-			        	return;			        	
+			        	return true;			        	
 			        }
 			        else{
 			        	console.log("result = " + result);
@@ -113,7 +115,10 @@
 	   		console.log("*************buttonIndex==0");
 		    //$.mobile.changePage("profilePage.html", { transition: "none" });
 		    //$('#idCreateProfilePage').trigger('create');
-		    window.location.reload(true);
+		    //window.location.reload(true);
+		    //$.mobile.changePage("profilePage.html", { transition: "none" });
+		    //refreshPage();
+		    refreshPage1(idCreateProfilePage);
 	   	}
 	    
 	}//function onConfirm(buttonIndex)    
@@ -126,7 +131,7 @@
 		
 		localStorage.mobileNo = $('#idMobile').val();
 		
-		if(len==12)
+		if(len==12 && WSInProgress==false)
 		{
 			var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Authentication";
 	        var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <Authentication xmlns="http://www.drivecarclub.com/"> <mobile>'+localStorage.mobileNo+'</mobile></Authentication> </soap:Body></soap:Envelope>';
@@ -141,6 +146,8 @@
 	            success: authenticationSuccess,
 	            error: authenticationError
 	        });
+	        
+	        WSInProgress = true;
 
 		}
 
@@ -155,7 +162,7 @@
     	//If backspace use it
     	if(key==8)
     	{
-    		return;
+    		return true;
     	}
     
 		var len = $('#idMobile').val().length;
@@ -166,12 +173,13 @@
 			alert("You cannot enter more than 12 digits as Mobile number");
 	        if (e.preventDefault) e.preventDefault(); //normal browsers
 	            e.returnValue = false; //IE 
-			return;			
+			return true;			
 		}
 	}
 	
 	function authenticationSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
     	//alert("*********************"+req.responseText);
+    	WSInProgress = false;
     	
     	console.log("************success:"+$(req.responseText).find('NewDataSet').find('Authentication').text());
     	localStorage.authenticated = $(req.responseText).find('NewDataSet').find('Authentication').text();
@@ -213,14 +221,42 @@
 		}
 		else
 		{
-			alert("It is not a registered Mobile number. Please enter valid mobile number..");
-			$("#idMobile").select();
-			return;
+			//alert("It is not a registered Mobile number. Please enter valid mobile number..");
+			//$("#idMobile").select();
+			//return true;
+			navigator.notification.confirm(
+							'Your number is not register. Go to website for registration.',  // message
+							onInvalidNumConfirm,              // callback to invoke with index of button pressed
+							'Unable to Proceed',            // title
+							'Ok, Cancel'          // buttonLabels
+						);
 		}		
 
     }
+    
+    function onInvalidNumConfirm(buttonIndex)
+	{
+		console.log("*************buttonIndex=="+buttonIndex);
+	   		
+	    if(buttonIndex==1)
+	    {
+	    	console.log("*************buttonIndex==1");
+	    	window.open('http://www.drivecarclub.com', '_blank', 'location=yes');	    	
+			
+	    }//if(buttonIndex==1)
+	   	else
+	   	{
+	   		console.log("*************buttonIndex==0");	 
+	   		$("#idMobile").select(); 		
+	   	}
+	    
+	}//function onConfirm(buttonIndex)  
+	
 
     function authenticationError(data, status, req) {
+    
+    	WSInProgress=false;
+    	
         /*alert(req.responseText + " " + status);
         console.log("Data::"+data);
         console.log("Status::"+status);
@@ -228,10 +264,10 @@
         
         //alert("Unable to Proceed. Please confirm if internet connection is active..");
         
-        		navigator.notification.confirm(
-							'Please reload after activating the internet or Close the application.',  // message
-							onProfileConfirm,              // callback to invoke with index of button pressed
-							'Unable to Proceed',            // title
-							'Close, Reload'          // buttonLabels
-						);
+		navigator.notification.confirm(
+					'Please reload after activating the internet or Close the application.',  // message
+					onProfileConfirm,              // callback to invoke with index of button pressed
+					'Unable to Proceed',            // title
+					'Close, Reload'          // buttonLabels
+				);
     }	

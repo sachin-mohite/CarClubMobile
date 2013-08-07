@@ -1,13 +1,25 @@
+$("#idBookNowPage").live('pageremove',function(){
+	//$.mobile.loading('show');
+	//$(".ui-loader").show();
+});
+
 $("#idBookNowPage").live('pageinit',function(){
+	
+	$(".ui-loader").hide();
+	
+	console.log("*******************idBookNowPage:pageinit");
 	
 	//customCCExpDatePicker('idExpDate');
 	$('#idExpDate').live('click', function() {
 	    $('#idExpDate').datebox('open');
 	});	
 	
-	$('#idBookNowdDone').live('touchstart',function(){
+	$('#idBookNowdDone').live('click',function(){
 	
-		$("#idBookNowdDone").unbind("touchstart");
+		$("#idBookNowdDone").unbind("click");
+		
+		if(WSInProgress==true)
+		return true;		
 		
 		console.log("********************idBookNowdDone");
 		
@@ -15,13 +27,13 @@ $("#idBookNowPage").live('pageinit',function(){
 		if($('#idExpDate').val()=="" || $('#idCreditCardNo').val()=="")
 		{
 			alert("Please enter all the fields..");
-			return;
+			return true;
 		}
 				
 		if(isNaN($('#idCreditCardNo').val())){
-			alert("Only numbers are allowed in  Credit Card feild");
-			$('#idCreditCardNo').select();
-			return;
+			alert("Only numbers are allowed in  Credit Card field");
+			//$('#idCreditCardNo').select();
+			return true;
 		}
 		else
 		{
@@ -33,7 +45,7 @@ $("#idBookNowPage").live('pageinit',function(){
 		{
 			alert("Invalid date format. Please reenter the date and submit.");
 			$('#idExpDate').select();
-			return;
+			return true;
 		}
 		
 		//Todo: confirm if lenth is 16
@@ -45,7 +57,7 @@ $("#idBookNowPage").live('pageinit',function(){
 		{
 			alert("Please confirm if Credit Card details are Valid");
 			$('#idCreditCardNo').select();
-			return;
+			return true;
 		}
 		
 		var expDate = $('#idExpDate').val();		
@@ -58,29 +70,56 @@ $("#idBookNowPage").live('pageinit',function(){
 		localStorage.CreditCardExpiryMonth = sessionStorage.CreditCardExpiryMonth;
 		localStorage.CreditcarExpiryYear = sessionStorage.CreditcarExpiryYear;
 		
-		navigator.notification.confirm(
+		/*navigator.notification.confirm(
 							'Do you really want to Book?',  // message
 							onConfirm,              // callback to invoke with index of button pressed
 							'Confirm Booking',            // title
 							'Book, Cancel'          // buttonLabels
-						);	
+						);*/
+
+		var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Create_Booking";
+		var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"> <soap:Body> <Create_Booking xmlns="http://www.drivecarclub.com/"> <CCType>'+sessionStorage.CCType+'</CCType><Company_Code>' + sessionStorage.CompanyCode + '</Company_Code>	<ContactNo>'+sessionStorage.ContactNo+'</ContactNo>	<EmailID>'+sessionStorage.EmailID+'</EmailID><GuestName>'+sessionStorage.GuestName+'</GuestName><GuestCode>'+sessionStorage.GuestCode+'</GuestCode>	<CreditCardNo>'+sessionStorage.CreditCardNo+'</CreditCardNo><CreditCardExpiryMonth>'+sessionStorage.CreditCardExpiryMonth+'</CreditCardExpiryMonth>	<CreditcarExpiryYear>'+sessionStorage.CreditcarExpiryYear+'</CreditcarExpiryYear><CityCode>'+sessionStorage.CityCode+'</CityCode> <CategoryCode>'+sessionStorage.CategoryCode+'</CategoryCode> <CarTypeCode>'+sessionStorage.CarTypeCode+'</CarTypeCode><PickupHrs>'+sessionStorage.PickupHrs+'</PickupHrs> <PickupMin>'+sessionStorage.PickupMin+'</PickupMin>	<Address>'+sessionStorage.Address+'</Address>	<ReportingDate>'+sessionStorage.ReportingDate+'</ReportingDate>	<ServiceType>'+sessionStorage.ServiceTypeID+'</ServiceType> </Create_Booking> </soap:Body></soap:Envelope>';
+		console.log(soapRequest)
+		
+	    $.mobile.loading('show');
+	    $(".ui-loader").show();
+	    
+	    $.ajax({
+	        type: "POST",
+	        url: wsUrl,
+	        contentType: "text/xml",
+	        dataType: "xml",
+	        data: soapRequest,
+	        success: bookNowSuccess,
+	        error: bookNowError
+	    });
+	    
+	    WSInProgress=true;
+	    
+	    //$.mobile.changePage("mainMenuPage.html", { transition: "none" });							
 
     });
 	
 });
 
-$("#idBookNowPage").live('pageremove',function(){
-	$.mobile.loading('show');
+$("#idBookNowPage").live('pageload',function(){
+	$.mobile.loading('hide');
+	$(".ui-loader").hide();
 });
 	
 $("#idBookNowPage").live('pagebeforeshow',function(){
 
 		if(sessionStorage.TarrifRate)
 		{
-			$("#idEstimatedCost").val("Rs. "+sessionStorage.TarrifRate);
+			var content = '<label for="cname" style="color:red;"> Rs. '+sessionStorage.TarrifRate+'</label>';
+			$('#idEstimatedCost').append(content);
+	    	$('#idEstimatedCost').trigger("create");
 		}	
 		
-		var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=GetLastCCDetails";
+		$.mobile.loading('hide');
+		$(".ui-loader").hide();
+		
+		/*var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=GetLastCCDetails";
         var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <GetLastCCDetails xmlns="http://www.drivecarclub.com/"> <mobile>'+localStorage.mobileNo+'</mobile></GetLastCCDetails> </soap:Body></soap:Envelope>';
                        console.log(soapRequest)
 		
@@ -92,7 +131,7 @@ $("#idBookNowPage").live('pagebeforeshow',function(){
             data: soapRequest,
             success: ccDetailsSuccess,
             error: ccDetailsError
-        });
+        });*/
 		
 });
 
@@ -136,30 +175,49 @@ function bookNowSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 	
 	console.log("*********************"+req.responseText);
 	
+	WSInProgress=false;
+	
     $(req.responseText )
     .find('Create_BookingResult')
     .each(function(){
        console.log("*************************"+$(this).text());
 	   if($(req.responseText).find('NewDataSet').find('Status').text()!="")
 	   {
-			alert("Reservation done with Booking ID "+$(req.responseText).find('NewDataSet').find('Status').text());
+			//alert("Reservation done with Booking ID "+$(req.responseText).find('NewDataSet').find('Status').text());
+			//Your Booking number isso and so and confirmed for dated: xx/xx/xxxx”
+			//alert("Your Booking number is "+$(req.responseText).find('NewDataSet').find('Status').text()+" and confirmed for "+sessionStorage.CityName+" dated: "+sessionStorage.ReportingDate);
+			navigator.notification.alert("Your Booking number is "+$(req.responseText).find('NewDataSet').find('Status').text()+" and confirmed for "+sessionStorage.CityName+" dated: "+sessionStorage.ReportingDate,"","BOOKING");
+				
 	   }
 	   else
 	   {
 			alert("We are not able to make this Reservation because of "+$(req.responseText).find('NewDataSet').find('Remarks').text());
 	   }
 	   
-	   $.mobile.loading('hide'); 
+	   $.mobile.loading('hide');
+	   $(".ui-loader").hide();
+	   $.mobile.changePage("mainMenuPage.html", { transition: "none" });
+	   return true;
 	});	
+	
+    $.mobile.loading('hide'); 
+    $(".ui-loader").hide();
     
-	$.mobile.changePage("mainMenuPage.html", { transition: "none" });
+    clearBooking();
+	
+	//$.mobile.changePage("mainMenuPage.html", { transition: "none" });
 }
 
 function bookNowError(data, status, req) {
-    alert(req.responseText + " " + status);
+    /*alert(req.responseText + " " + status);
     console.log("Data::"+data);
     console.log("Status::"+status);
-    console.log("Request::"+req);
+    console.log("Request::"+req);*/
+    WSInProgress=false;
+	alert("Unable to Proceed. Please confirm if Internet connection is active..");
+	
+	$.mobile.loading('hide'); 
+	$(".ui-loader").hide();
 }       
 
 function ccKeyUp(e)
@@ -168,7 +226,7 @@ function ccKeyUp(e)
 	
 	console.log("****************Length:"+len);
 	
-	if(len==16)
+	if(len==16 && WSInProgress==false)
 	{
 		var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=ValidateCreditCard";
         var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <ValidateCreditCard xmlns="http://www.drivecarclub.com/"> <ccnumber>'+$('#idCreditCardNo').val()+'</ccnumber></ValidateCreditCard> </soap:Body></soap:Envelope>';
@@ -183,6 +241,8 @@ function ccKeyUp(e)
             success: ccSuccess,
             error: ccError
         });
+        
+        WSInProgress=true;
 
 	}
 
@@ -197,7 +257,7 @@ function ccKeyDown(e)
 	//If backspace use it
 	if(key==8)
 	{
-		return;
+		return true;
 	}
 
 	var len = $('#idCreditCardNo').val().length;
@@ -208,12 +268,13 @@ function ccKeyDown(e)
 		alert("You cannot enter more than 16 digits as Credit Card Number");
         if (e.preventDefault) e.preventDefault(); //normal browsers
             e.returnValue = false; //IE 
-		return;			
+		return true;			
 	}
 }
 
 function ccSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 	//alert("*********************"+req.responseText);
+	WSInProgress=false;
 	
 	console.log("************success:"+$(req.responseText).find('NewDataSet').find('Status').text());
 	
@@ -221,7 +282,7 @@ function ccSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 	{
 		alert("It is not a Valid Credit Card Number. Please re-enter Credit Card Number..");
 		$("#idCreditCardNo").select();
-		return;  				
+		return true;  				
 	}
 	else
 	{
@@ -232,13 +293,14 @@ function ccSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 }  
 
 function ccError(data, status, req) {
+	WSInProgress=false;
     /*alert(req.responseText + " " + status);
     console.log("Data::"+data);
     console.log("Status::"+status);
     console.log("Request::"+req);*/
     
    	alert("Unable to Proceed. Please confirm if internet connection is active..");
-   	return;
+   	return true;
 }	
 
 	function ccDetailsSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
@@ -269,6 +331,7 @@ function ccError(data, status, req) {
 			if($('#idCreditCardNo').val().length < 16)
 			{
 				alert("Credit Card Number can not be less 16 digits. Please enter valid Credit Card Number");
+				return true;
 				//$('#idCreditCardNo').select();
 			}
 			  				
@@ -277,8 +340,11 @@ function ccError(data, status, req) {
 		{
 			alert("No Credit Card Details available. Please enter it manually.");
 			$("#idCreditCardNo").select();
-			
+			return true;			
 		}
+		
+		$.mobile.loading('hide');
+		$(".ui-loader").hide();
     }
 
     function ccDetailsError(data, status, req) {
@@ -287,5 +353,10 @@ function ccError(data, status, req) {
         console.log("Status::"+status);
         console.log("Request::"+req);*/
         
+        $.mobile.loading('hide');
+        $(".ui-loader").hide();
+        
         alert("Unable to Proceed. Please confirm if Internet connection is active..");
+        
+        
     }	

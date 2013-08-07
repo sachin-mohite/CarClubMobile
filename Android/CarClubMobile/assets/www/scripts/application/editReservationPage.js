@@ -1,7 +1,9 @@
 $("#idEditReservationPage").live('pageinit',function(){
 	console.log("***************In idEditReservationPage: pageinit");	
 	
-	$('.editlBookingClass').live('touchstart',function(){
+	$('.editlBookingClass').live('click',function(){
+	
+		$(".editlBookingClass").unbind("click");
 		
 		console.log("*******************create profile::"+$(this).attr("BookingNum"));	
 		
@@ -94,18 +96,18 @@ function editBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXML)
 			    dd = repDate[2];
 			    mm = repDate[1]; //January is 0!	
 			    yyyy = repDate[0];
-			    if(dd<10){
+			    /*if(dd<10){
 			    	dd='0'+dd;
 			    } 
 			    
 			    if(mm<10){
 			    	mm='0'+mm;
-			    }
+			    }*/
 			    
 			    repDate = dd+'/'+mm+'/'+yyyy;				
 					
 				//options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br><a data-role="button" href="#" id="idBookNowButton'+i+'" Tariff_Code="'+arrTarrifCode[i]+'" Package_Name="'+arrTarrifName[i]+'" Rate="'+arrRate[i]+'" Extra_Km_Rate="'+arrExtraKMRate[i]+'" Extra_Hr_Rate="'+arrExtraHRRate[i]+'" class="bookNowClass" data-transition="none">Book Now</a></div>';
-	        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+repDate+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" Address="'+arrReportingAdd[i]+'" ReportingDate="'+repDate+'" ReportingTime="'+arrReportingTime[i]+'" class="editlBookingClass">EDIT BOOKING</a></div>';
+	        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+repDate+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" Address="'+arrReportingAdd[i]+'" ReportingDate="'+repDate+'" ReportingTime="'+arrReportingTime[i]+'" class="editlBookingClass">Edit Booking</a></div>';
 			}  
 			console.log("Options:"+options);
 		    $('#idEditBookingContainer').append(options);
@@ -116,10 +118,11 @@ function editBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXML)
 }
 
 function editBookingError(data, status, req) {
-    alert(req.responseText + " " + status);
+    /*alert(req.responseText + " " + status);
     console.log("Data::"+data);
     console.log("Status::"+status);
-    console.log("Request::"+req);
+    console.log("Request::"+req);*/
+	alert("Unable to Proceed. Please confirm if Internet connection is active..");
     
     $.mobile.loading('hide');
 }

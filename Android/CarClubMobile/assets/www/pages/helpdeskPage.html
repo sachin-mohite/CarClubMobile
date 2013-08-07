@@ -1,5 +1,5 @@
 		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idHelpDeskPage" style="background:url(../images/inner_page_bg.png) repeat-y;">
+		<div data-role="page" data-theme="b"  data-position="fixed" id="idHelpDeskPage" style="background:url(../images/inner_page_bg.png) repeat-y;">
 		
 			<!-- Page Header Start -->
 			<div id="idHeader" data-role="header" data-position="fixed" class="ui-bar ui-bar-b">
@@ -15,74 +15,85 @@
 
 				<form action="#" method="get">
 				
-						<div style="width: 45%; float:left" align="right">
-							<label for="telephone" style="color:#045BA8;">
-							Telephone No :
-							</label>
+				<table>
+		           <tr><td>
+						<div data-position="inline" style='width: $(document).width();'>
+
+						</div>	           
+		           </td></tr>
+		           <tr><td>
+	           
+						<div data-position="inline" style="width: 100%;width: $(document).width();">
+							<div style="width: 45%; float:left" align="right">
+								<label for="telephone" style="color:#045BA8;">
+								Reservation Number :
+								</label>
+							</div>							
+							
+							<div style="width: 55%; float:right" id="idHelpTelephoneNum">
+							</div>
 						</div>
-						
-						<div style="width: 55%; float:right" id="idHelpTelephoneNum">
+					</td></tr>
+		           <tr><td>
+						<div data-position="inline" style="width: 100%; width: $(document).width();">
+							<div style="width: 45%; float:left; " align="right">
+								<label for="telephone" style="color:#045BA8;">
+								Reservation Email ID :
+								</label>
+							</div>
+							
+							<div style="width: 55%; float:right; word-wrap:break-word;" id="idHelpResEmail">
+							</div>
 						</div>
-					<div data-role="fieldcontain" data-position="inline"></div><br>
-					
-						<div style="width: 45%; float:left; " align="right">
-							<label for="telephone" style="color:#045BA8;">
-							Support Email :
-							</label>
+						<div data-role="fieldcontain" data-position="inline"></div>		           
+		           </td></tr>
+		           <tr><td>
+					<div data-position="inline" style="width: 100%;">
+							<div style="width: 45%; float:left" align="right">
+								<label for="telephone" style="color:#045BA8;">
+								Technical Support Number :
+								</label>
+							</div>
+							
+							<div style="width: 55%; float:right" id="idHelpTechSupportNum">
+							</div>
+							<div style="width: 55%; float:right; word-wrap:break-word;">
+							</div>	
+						</div><br>
+							           
+		           </td></tr>
+		           <tr><td>
+						<div data-position="inline">
+							<div style="width: 45%; float:left; " align="right">
+								<label for="telephone" style="color:#045BA8;">
+								Technical Support Email ID :
+								</label>
+							</div>
+							
+							<div style="width: 55%; float:right; word-wrap:break-word;" id="idHelpSupportEmail">
+							</div>
+							<div style="width: 55%; float:right; hidden; word-wrap:break-word;">
+							</div>						
 						</div>
-						
-						<div style="width: 55%; float:right; overflow-y: auto; overflow-x: hidden; word-wrap:break-word;" id="idHelpSupportEmail">
-						</div>						
-					
-					<div data-role="fieldcontain" data-position="inline"></div><br>
-					
-						<div style="width: 45%; float:left; " align="right">
-							<label for="telephone" style="color:#045BA8;">
-							Reservation Email :
-							</label>
-						</div>
-						
-						<div style="width: 55%; float:right; overflow-y: auto; overflow-x: hidden; word-wrap:break-word;" id="idHelpResEmail">
-						</div>	
-											
-					<div data-role="fieldcontain" data-position="inline"></div><br>
-					
-						<div style="width: 45%; float:left" align="right">
-							<label for="telephone" style="color:#045BA8;">
-							Help line no :
-							</label>
-						</div>
-						
-						<div style="width: 55%; float:right" id="idHelpHelpLine">
-						</div>							
-				 	
-					<div data-role="fieldcontain" data-position="inline"></div><br>
-					
-						<div style="width: 45%; float:left" align="right">
-							<label for="telephone" style="color:#045BA8;">
-							Privacy Policy :
-							</label>
-						</div>
-						
-						<div style="width: 55%; float:right" id="idHelpPrivacyPolicy">
+						<div data-role="fieldcontain" data-position="inline"></div>			           
+		           </td></tr>
+		           
+		           <tr><td>
+						<div style="width: 100%; float:right; vertical-align: middle; height:100%;" >
 							<label for="telephone" style="color:black;">
-							<a href="http://www.drivecarclub.com/Matter/PrivacyPolicy.pdf">Click here to read Privacy Policy</a>
+							<a href="#" id="idHelpPrivacyPolicy">Click here to read Privacy Policy</a>
 							</label>
 						</div>
-					<div data-role="fieldcontain" data-position="inline"></div><br>
-					
-						<div style="width: 45%; float:left" align="right">
-							<label for="telephone" style="color:#045BA8;">
-							Website :
-							</label>
+						<div data-role="fieldcontain" data-position="inline"></div>								
+		           </td></tr>						
+						
+		           <tr><td>
+						<div style="width: 100%; float:right" id="idHelpWebsite">
 						</div>
-						
-						<div style="width: 55%; float:right" id="idHelpWebsite">
-						</div>	
-						
-					<div data-role="fieldcontain" data-position="inline"></div>				   
-				   
-				</form>
+		        		<div data-role="fieldcontain" data-position="inline"></div>										           
+		           </td></tr>
+		       </table>
+			</form>
 			
 			</div>
 			<!-- Page Body End -->

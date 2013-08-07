@@ -92,13 +92,13 @@ function futureBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 		    dd = repDate[2];
 		    mm = repDate[1]; //January is 0!	
 		    yyyy = repDate[0];
-		    if(dd<10){
+		    /*if(dd<10){
 		    	dd='0'+dd;
 		    } 
 		    
 		    if(mm<10){
 		    	mm='0'+mm;
-		    }
+		    }*/
 		    
 		    repDate = dd+'/'+mm+'/'+yyyy;				
 				        		
@@ -109,13 +109,18 @@ function futureBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 	    $('#idFutureBooking').append(options);
 	    $('#idFutureBooking').trigger("create");        
     
-    }  
+    }
+    
+    $.mobile.loading('hide');  
 
 }
 
 function futureBookingError(data, status, req) {
-    alert(req.responseText + " " + status);
+    /*alert(req.responseText + " " + status);
     console.log("Data::"+data);
     console.log("Status::"+status);
-    console.log("Request::"+req);
+    console.log("Request::"+req);*/
+	alert("Unable to Proceed. Please confirm if Internet connection is active..");
+	
+	$.mobile.loading('hide');
 }         

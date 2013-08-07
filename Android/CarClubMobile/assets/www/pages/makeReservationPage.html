@@ -1,6 +1,6 @@
 
 <!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idMakeReservationPage" data-position="fixed" style="background:url(../images/inner_page_bg.png) repeat-y;">
+		<div data-role="page" data-theme="b"  data-position="fixed" id="idMakeReservationPage" data-position="fixed" style="background:url(../images/inner_page_bg.png) repeat-y;">
 		
 			<!-- Page Header Start -->
 			<div id="idHeader" data-role="header" data-position="fixed" class="ui-bar ui-bar-b">
@@ -18,57 +18,58 @@
 			<div data-role="content">
 
 				<form action="#" method="get">
-					<div data-role="fieldcontain" data-position="inline">
+					<!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="city" style="color:#045BA8;">
-						CITY
+						City
 						</label>
 			            <select name="pageselect" id="idCityselect" data-native-menu="true" style="direction: ltr; text-align:left; float:left; margin-left: 0px;" data-iconpos="left">
 			            </select>
-					</div>
+					<!--/div!-->
 					
-					<div data-role="fieldcontain" data-position="inline">
+					<!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="cType" style="color:#045BA8;">
-						CAR TYPE
+						Car Type
 						</label>
 			            <select name="pageselect" id="idCarType" data-native-menu="true" data-iconpos="left">
 			            </select>
-					</div>
+					<!--/div!-->
 					
-					<div data-role="fieldcontain" data-position="inline">
+					<!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="pickupTime" style="color:#045BA8;">
-						PICK UP TIME
+						Pick Up Time
 						</label>
 						<!--input type="time" name="pickupTime" id="idPickupTime" placeholder="HH:MM[00/15/30/45]" value=""/-->
 						<input type="text" id="idPickupTime" name="pickupTime" placeholder="HH:MM[00/15/30/45]"/>
-					</div>
+						<!--input name="mydate" id="idPickupTime" type="date" data-role="datebox" data-options='{"mode": "timebox",  "overrideTimeFormat": 24}'-->
+					<!--/div!-->
 					
-					<div data-role="fieldcontain" data-position="inline">
+					<!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="date" style="color:#045BA8;">
-						REPORTING DATE
+						Reporting Date
 						</label>
 						<!--input type="date" name="date" onblur="changeDateFormat(this)" id="idDate" value="" placeholder="DD/MM/YYYY" value="31/01/2013"/-->
 						<!--input type="text" id="idDate" name="date" placeholder="DD/MM/YYYY"/-->
-					    <input data-iconpos="left" data-theme="b" data-options='{"useFocus": true, "useButton": false, "noButton": true, "mode":"calbox", "overrideDateFormat":"%d/%m/%Y", "defaultValue":[1,0,2001], "calHighPicked":false, "calHighToday":false, "calHighPicked": false}' data-role="datebox" id="idDate" name="date" type="date" />
-					</div>
+					    <input data-iconpos="left" data-theme="b" data-options='{"useFocus": true, "afterToday": true, "useButton": false, "noButton": true, "mode":"calbox", "overrideDateFormat":"%d/%m/%Y", "defaultValue":[1,0,2001], "calHighPicked":false, "calHighToday":false, "calHighPicked": false}' data-role="datebox" id="idDate" name="date" type="date" />
+					<!--/div!-->
 					
-					<div data-role="fieldcontain" data-position="inline">
+					<!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="usage" style="color:#045BA8;">
-						USAGE
+						Usage
 						</label>
 			            <select name="pageselect" id="idUsage" data-native-menu="true" data-iconpos="left" data-overlay-theme="b">
 			            </select>						
-					</div>
+					<!--/div!-->
 					
-					<div data-role="fieldcontain"  data-position="inline">
+					<!--div data-role="fieldcontain"  data-position="inline"!-->
 						<label style="color:#045BA8;">
-						AREA
+						Reporting Address
 						</label>
 						
 						<textarea name="textarea" id="idArea">
 						</textarea>
-					</div>
+					<!--/div!-->
 					
-					<a data-role="button" href="#"  id="idMakeReservationNext" data-transition="none">NEXT</a>			
+					<a data-role="button" href="#"  id="idMakeReservationNext" data-transition="none">Next</a>			
 				</form>
 			
 			</div>

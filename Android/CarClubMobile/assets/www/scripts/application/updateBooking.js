@@ -1,3 +1,8 @@
+	$("#idUpdateBookingPage").live('pageremove',function(){
+		//$.mobile.loading('show');
+		prevPageID="";
+	});
+
 	$("#idUpdateBookingPage").live('pageinit',function(){
 		
 		$('#idDate').live('click', function() {
@@ -6,7 +11,9 @@
 		
 		customTimePicker('idPickupTime');
 		
-		$('#idUpdateBookingNext').live('touchstart',function(){
+		$('#idUpdateBookingNext').live('click',function(){
+		
+			$("#idUpdateBookingNext").unbind("click");
 			
 			console.log("************************idUpdateBookingPage:idUpdateBookingNext");
 			
@@ -14,13 +21,13 @@
 			if($('#idDate').val()=="" || $('#idPickupTime').val()=="" || $('#idArea').val()=="")
 			{
 				alert("Please enter all the fields..");
-				return;
+				return true;
 			}
 			
 			if(isValidateHhMm($('#idPickupTime').val())==false)
 			{
 				alert("Invalid time format. Please reenter the time and submit.");
-				return;
+				return true;
 			}
 			
 			var myArray = ['00','15','30','45'],
@@ -30,14 +37,14 @@
 			if( index==-1)
 			{
 				alert("Minutes can contain only 00/15/30/45.");
-				return;
+				return true;
 			}
 			
 			
 			if(isValidDate($('#idDate').val())==false)
 			{
 				alert("Invalid date format. Please reenter the date and submit.");
-				return;
+				return true;
 			}			
 			
 			var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=updateBookings";
@@ -58,8 +65,10 @@
 		
 	});	
 	
-	$("#idUpdateBookingPage").live('pagebeforeshow',function(){
+	$("#idUpdateBookingPage").live('pagebeforeshow',function(event, data){
 		console.log("******************idUpdateBookingPage:pagebeforeshow");
+		
+		prevPageID = data.prevPage.attr('id');
 		
 		var options = "";
 		
@@ -102,8 +111,9 @@
     }
 
     function updateBookingError(data, status, req) {
-        alert(req.responseText + " " + status);
+        /*alert(req.responseText + " " + status);
         console.log("Data::"+data);
         console.log("Status::"+status);
-        console.log("Request::"+req);
+        console.log("Request::"+req);*/
+		alert("Unable to update Booking. Please confirm if Internet connection is active..");
     } 

@@ -1,19 +1,24 @@
 $("#idCancelBookingPage").live('pageinit',function(){
 	console.log("***************In idCancelBookingPage: pageinit");	
 	
-	$('.cancelBookClass').live('touchstart',function(){
+	$('.cancelBookClass').live('click',function(){
+		$(".cancelBookClass").unbind("click");
+		
+		if(confirmInProgress==true)
+		return;
 		
 		console.log("*******************create profile::"+$(this).attr("BookingNum"));	
 		
 		sessionStorage.cancelBookingNum = $(this).attr("BookingNum");
 		
+		confirmInProgress=true;
+		
 		navigator.notification.confirm(
-				'Do you really want to cancel Booking '+sessionStorage.cancelBookingNum+'?',  // message
+				'Cancel the Booking '+sessionStorage.cancelBookingNum,  // message
 				onCancelBookConfirm,              // callback to invoke with index of button pressed
 				'Cancel Booking',            // title
 				'Yes, No'          // buttonLabels
-			);	
-		
+			);		
 	});
 
 });
@@ -96,17 +101,17 @@ function cancelBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 			    dd = repDate[2];
 			    mm = repDate[1]; //January is 0!	
 			    yyyy = repDate[0];
-			    if(dd<10){
+			    /*if(dd<10){
 			    	dd='0'+dd;
 			    } 
 			    
 			    if(mm<10){
 			    	mm='0'+mm;
-			    }
+			    }*/
 			    
 			    repDate = dd+'/'+mm+'/'+yyyy;	
 				//options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+arrReportingDate[i]+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br><a data-role="button" href="#" id="idBookNowButton'+i+'" Tariff_Code="'+arrTarrifCode[i]+'" Package_Name="'+arrTarrifName[i]+'" Rate="'+arrRate[i]+'" Extra_Km_Rate="'+arrExtraKMRate[i]+'" Extra_Hr_Rate="'+arrExtraHRRate[i]+'" class="bookNowClass" data-transition="none">Book Now</a></div>';
-	        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+repDate+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" class="cancelBookClass">CANCEL BOOKING</a></div>';
+	        	options = options + '<div data-role="fieldcontain" data-position="inline">	<label for="email" style="color:#045BA8;">Booking Number:' +arrActualBkNum[i]+	'</label><br>Reporting Date:'+repDate+'<br>Reporting Time:'+arrReportingTime[i]+'<br>	Reporting Address:'+arrReportingAdd[i]+'<br> <a data-role="button" href="#" id="idBookNowButton'+i+'" BookingNum="'+arrActualBkNum[i]+'" class="cancelBookClass">Cancel Booking</a></div>';
 			}  
 			console.log("Options:"+options);
 		    $('#idCancelBookingContainer').append(options);
@@ -118,16 +123,17 @@ function cancelBookingSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 }
 
 function cancelBookingError(data, status, req) {
-    alert(req.responseText + " " + status);
+    /*alert(req.responseText + " " + status);
     console.log("Data::"+data);
     console.log("Status::"+status);
-    console.log("Request::"+req);
+    console.log("Request::"+req);*/
+	alert("Unable to Proceed. Please confirm if Internet connection is active..");
+	
     $.mobile.loading('hide');
 }   
 
 function onCancelBookConfirm(buttonIndex)
-{
-   		
+{   		
     if(buttonIndex==1)
     {
     	console.log("*************buttonIndex==1");
@@ -146,12 +152,15 @@ function onCancelBookConfirm(buttonIndex)
 	        error: cancelConfirmError
 	    });
 	    
+	    confirmInProgress=false;
+	    
 	    $.mobile.changePage("mainMenuPage.html", { transition: "none" });	    
 
     }//if(buttonIndex==1)
    	else
    	{
    		sessionStorage.cancelBookingNum = "";
+   		confirmInProgress=false;
    	}
     
 }//function onConfirm(buttonIndex)

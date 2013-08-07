@@ -1,3 +1,8 @@
+$("#idSelectPackagePage").live('pageremove',function(){
+	//$.mobile.loading('show');
+	//$(".ui-loader").show();
+});
+
 $("#idSelectPackagePage").live('pageinit',function(){
 	console.log("***************In idSelectPackagePage: pageinit");	
 	
@@ -18,6 +23,7 @@ $("#idSelectPackagePage").live('pagebeforeshow',function(){
 	console.log("***************In idSelectPackagePage:pagebeforeshow");
 	
 	$.mobile.loading('show');
+	$(".ui-loader").show();
 	
 	//City
 	//var wsUrl = "http://www.drivecarclub.com/MyService/Service.asmx?op=Package";
@@ -109,8 +115,10 @@ function selectPackageSuccess(data, status, req, xml, xmlHttpRequest, responseXM
 }
 
 function selectPackageError(data, status, req) {
-    alert(req.responseText + " " + status);
+    /*alert(req.responseText + " " + status);
     console.log("Data::"+data);
     console.log("Status::"+status);
-    console.log("Request::"+req);
+    console.log("Request::"+req);*/
+    alert("Unable to fetch Packages. Please confirm if Internet connection is active..");
+    $.mobile.loading('hide');
 }         

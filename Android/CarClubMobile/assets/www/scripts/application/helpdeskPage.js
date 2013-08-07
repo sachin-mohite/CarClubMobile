@@ -2,6 +2,10 @@
 	
 		$.mobile.loading('hide');
 		
+		$('#idHelpPrivacyPolicy').live('touchstart',function(){
+			window.open('http://www.drivecarclub.com/Matter/PrivacyPolicy.pdf', '_system', 'location=yes');
+		});
+		
 	});
 
 	
@@ -75,6 +79,11 @@ function helpSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 	    $('#idHelpResEmail').append(options);
 	    $('#idHelpResEmail').trigger("create");
 	    
+	    options = '<label for="telephone" style="color:black;">'+arrContactNum[1]+'</label>';
+		console.log("Options:"+options);
+	    $('#idHelpTechSupportNum').append(options);
+	    $('#idHelpTechSupportNum').trigger("create");	    
+	    
 	   	options = '<label for="telephone" style="color:black;"><a href="mailto:'+arrEmailID[1]+'">'+arrEmailID[1]+'</a></label>';
 		console.log("Options:"+options);
 	    $('#idHelpSupportEmail').append(options);
@@ -85,7 +94,7 @@ function helpSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
 	    $('#idHelpHelpLine').append(options);
 	    $('#idHelpHelpLine').trigger("create");
 	    
-		options = '<label for="telephone" style="color:black;"><a href="'+arrEmailID[4]+'">'+arrEmailID[4]+'</a></label>';
+		options = '<label for="telephone" style="color:black;"><a href="http://'+arrEmailID[4]+'" target="_blank">'+arrEmailID[4]+'</a></label>';
 		console.log("Options:"+options);
 	    $('#idHelpWebsite').append(options);
 	    $('#idHelpWebsite').trigger("create");	    	    
@@ -99,7 +108,7 @@ function helpSuccess(data, status, req, xml, xmlHttpRequest, responseXML) {
         console.log("Status::"+status);
         console.log("Request::"+req);*/
         
-        alert("Unable to Proceed. Please confirm if internet connection is active..");
-
+        alert("Unable to fetch HelpDesk details. Please confirm if internet connection is active..");
+        $.mobile.loading('hide');
     }	
 	

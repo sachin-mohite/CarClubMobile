@@ -1,5 +1,5 @@
 		<!-- Page Start-->
-		<div data-role="page" data-theme="b" id="idEditProfilePage" style="background:url(../images/inner_page_bg.png)  repeat-y;">
+		<div data-role="page" data-theme="b" id="idEditProfilePage"  data-position="fixed" style="background:url(../images/inner_page_bg.png)  repeat-y;">
 		
 			<!-- Page Header Start -->
 			<div id="idHeader" data-role="header" data-position="fixed" class="ui-bar ui-bar-b">
@@ -13,38 +13,38 @@
 
 				<form action="#" method="get">
 				
-					<div data-role="fieldcontain" data-position="inline">
+					<!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="mnumber" style="color:#045BA8;">
-						MOBILE NO
+						Mobile No
 						</label>
 						<input type="number" name="mnumber" id="idMobile" value="" placeholder="9955884488" disabled="disabled" required/>
-				   </div>
+				   <!--/div!-->
 				       
-				   <div data-role="fieldcontain" data-position="inline">
+				   <!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="name" style="color:#045BA8;">
 						PASSANGER NAME
 						</label>
 						<input type="text" name="name" id="idName" value="" onKeyUp="editProfileKeyUp(this)" placeholder="jljlk" required/>
-					</div>
+					<!--/div!-->
 				   
-					<div data-role="fieldcontain" data-position="inline">
+					<!--div data-role="fieldcontain" data-position="inline"!-->
 						<label for="cname" style="color:#045BA8;">
 						COMPANY NAME
 						</label>
 						<input type="text" name="cname" id="idCName" value="" placeholder="jljlk" disabled="disabled" required/>
-					</div>
+					<!--/div!-->
 					
-					<div data-role="fieldcontain" data-position="inline">
+					<div data-role="fieldcontain" data-position="inline"!-->
 						<label for="email" style="color:#045BA8;">
 						PASSANGER EMAIL
 						</label>
 						<input type="email" name="email" id="idEmail" value="" onKeyUp="editProfileKeyUp(this)" placeholder="jljlk" required/>
-					</div>
+					<!--/div!-->
 					
 				</form>
 				
 				<a href="#" data-transition="none">
-					<input type="button" id="idEditProfileUpdate" value="NEXT"/> 
+					<input type="button" id="idEditProfileUpdate" value="Next"/> 
 				</a>
 			
 			</div>

@@ -1,4 +1,7 @@
 	var db = null;
+	var WSInProgress=false;
+	var confirmInProgress=false;
+	var prevPageID="";
 	
 	//reset type=date inputs to text
 	$( document ).bind( "mobileinit", function(){
@@ -8,17 +11,48 @@
 	
 	$(document).ready(function()
 	{
-		if(!localStorage.mobileNo || localStorage.mobileNo === "" || !localStorage.passangerName || localStorage.passangerName === "" || !localStorage.companyName || localStorage.companyName === "" || !localStorage.passangerEmail || localStorage.passangerEmail === "") {
-    		$.mobile.changePage("pages/profilePage.html", { transition: "none" });
-		}
-		else {
-			$.mobile.changePage("pages/editprofilePage.html", { transition: "none" });
-			$.mobile.loading('show');
-		}	
+	
+		$(document).bind('backbutton', onPressBack);
 		
-		//$.mobile.changePage("pages/selectPackage.html", { transition: "none" });
+		//var networkState = navigator.network.connection.type;
+	
+		/*if (networkState == Connection.NONE){
+		  alert('No Internet Connection..');
+		  //Todo: Render splash screen
+		}
+		else
+		{*/
+			if(!localStorage.mobileNo || localStorage.mobileNo === "" || !localStorage.passangerName || localStorage.passangerName === "" || !localStorage.companyName || localStorage.companyName === "" || !localStorage.passangerEmail || localStorage.passangerEmail === "") {
+	    		$.mobile.changePage("pages/profilePage.html", { transition: "none" });
+			}
+			else {
+				$.mobile.changePage("pages/editprofilePage.html", { transition: "none" });
+				$.mobile.loading('show');
+			}		
+		//}
 		
 	});//$(document).ready(function()
+	
+	function onPressBack()
+	{
+			//exit when back button pressed on home screen
+
+			console.log("*************************prevPageID:"+prevPageID);
+	    	var activePage = $.mobile.activePage.attr('id');
+		    if (activePage == "idCreateProfilePage" || activePage == "idEditProfilePage" && prevPageID!="") {
+	            navigator.app.exitApp();
+	        } 
+	        else if (activePage == "idUpdateBookingPage" ){
+				$.mobile.changePage("editReservationPage.html", { transition: "none" });	        
+	        }
+	        else if (activePage == "idMakeReservationPage" ){
+				$.mobile.loading('hide');	        
+	        }	        
+	        else{
+	            navigator.app.backHistory();
+	        }
+		   
+	}
 	
 	function clearBooking()
 	{
@@ -32,6 +66,7 @@
 		sessionStorage.CreditCardExpiryMonth = "";
 		sessionStorage.CreditcarExpiryYear = "";
 		sessionStorage.CityCode = "";
+		sessionStorage.CityName = "";
 		sessionStorage.CategoryCode = "";
 		sessionStorage.CarTypeCode = "";
 		sessionStorage.PickupHrs = "";
@@ -39,6 +74,17 @@
 		sessionStorage.Address = "";
 		sessionStorage.ReportingDate  = "";
 		sessionStorage.ServiceType = "";
+	}
+	
+	function initUserProfile()
+	{
+		sessionStorage.authenticated = localStorage.authenticated;
+		sessionStorage.ContactNo = localStorage.mobileNo;
+		sessionStorage.GuestName = localStorage.passangerName;
+		sessionStorage.companyName = localStorage.companyName;
+		sessionStorage.CompanyCode = localStorage.companyCode;
+		sessionStorage.EmailID = localStorage.passangerEmail;
+		sessionStorage.GuestCode = localStorage.GuestCode;		
 	}
 	
 	function clearProfile()
@@ -197,3 +243,51 @@
            showOnFocus:'true'
        });
    }	   
+   
+function dstrToUTC(ds, time) {
+	 var dsarr = ds.split("/");
+
+	 var dd = parseInt(dsarr[0],10);
+	 var mm = parseInt(dsarr[1],10);
+	 var yy = parseInt(dsarr[2],10);
+	 
+	 if(time!="")
+	 {
+		 var tmarr = time.split(":");
+		 return Date.UTC(yy,mm-1,dd,tmarr[0],tmarr[1],0);	 
+	 }
+	 else
+	 {
+	 	return Date.UTC(yy,mm-1,dd,0,0,0);	 
+	 }
+	 
+}
+
+function timediff(ds1,ds2) {
+	 //var d1 = dstrToUTC(ds1);
+	 //var d2 = dstrToUTC(ds2);
+	 var oneHr = 60*60*60*100;
+	 var diff = (ds1-ds2) / oneHr;
+	 
+	 console.log("****************diff:"+diff);
+	 
+	 return diff;
+}
+
+function refreshPage() {
+  $.mobile.changePage(
+    window.location.href,
+    {
+      allowSamePageTransition : true,
+      transition              : 'none',
+      showLoadMsg             : false,
+      reloadPage              : true
+    }
+  );
+}
+
+function refreshPage1(page){
+    // Page refresh
+    $("#"+page).trigger('pagecreate');
+    $("#"+page).listview('refresh');
+}
